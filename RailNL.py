@@ -4,19 +4,20 @@ Created on Tue Nov  6 14:26:50 2018
 
 @author: My Lenovo
 """
-
+import os
 import xlrd
+
 """ IMPORT CONNECTIES BESTAND """
-lisa_connecties = r"C:\Users\My Lenovo\Downloads/ConnectiesHolland.xlsx"
-bestand_connecties = xlrd.open_workbook(lisa_connecties)
+naam_connecties = os.path.join(os.path.dirname(__file__), 'ConnectiesHolland.xlsx')
+bestand_connecties = xlrd.open_workbook(naam_connecties)
 sheet1_connecties = bestand_connecties.sheet_by_index(0)
 nrows1_connecties = sheet1_connecties.nrows
 
-""" IMPORT KRITIEK BESTAND """
-lisa_kritiek = r"C:\Users\My Lenovo\Downloads/StationsHolland.xlsx"
-bestand_kritiek = xlrd.open_workbook(lisa_kritiek)
-sheet1_kritiek = bestand_kritiek.sheet_by_index(0)
-nrows1_kritiek = sheet1_kritiek.nrows
+""" IMPORT STATIONS BESTAND """
+naam_stations = os.path.join(os.path.dirname(__file__), 'StationsHolland.xlsx')
+bestand_stations = xlrd.open_workbook(naam_stations)
+sheet1_stations = bestand_stations.sheet_by_index(0)
+nrows1_stations = sheet1_stations.nrows
 
 """ PLAATS ALLE CONNECTIES ALS LIST IN LIST """
 list_met_connecties = []
@@ -34,9 +35,9 @@ for i in range(0, nrows1_connecties):
     
 """ PLAATS ALLE STATIONS + BOOLEAN OF KRITIEK IN LIST"""
 list_met_stations = []
-for i in range(0, nrows1_kritiek):
+for i in range(0, nrows1_stations):
     # van ['station, x, y, (Kritiek)'] naar 'station, x, y, (Kritiek)'
-    string = sheet1_kritiek.row_values(i)[0] 
+    string = sheet1_stations.row_values(i)[0] 
     
     # van 'station, x, y, (Kritiek)' naar ["station", boolean kritiek] 
     station = []
@@ -49,7 +50,7 @@ for i in range(0, nrows1_kritiek):
     list_met_stations.append(station)
 
 
-print(list_met_stations)
+#print(list_met_stations)
 # 
 #    ####### CLASSES INDELEN
 #
