@@ -32,16 +32,13 @@ for i in range(0, nrows1_connecties):
     
     list_met_connecties.append(connectie)
     
-    
-#print(list_met_connecties)
-#print(list_met_connecties[0][0]) # = plaats1
-
+""" PLAATS ALLE STATIONS + BOOLEAN OF KRITIEK IN LIST"""
 list_met_stations = []
 for i in range(0, nrows1_kritiek):
-    # van ['plaats1, plaats2, afstand'] naar 'plaats1, plaats2, afstand'
+    # van ['station, x, y, (Kritiek)'] naar 'station, x, y, (Kritiek)'
     string = sheet1_kritiek.row_values(i)[0] 
     
-    # van 'plaats1, plaats2, afstand' naar ["plaats1", "plaats2", "afstand"] 
+    # van 'station, x, y, (Kritiek)' naar ["station", boolean kritiek] 
     station = []
     station.append(string.split(',')[0])
     if string.split(',')[-1] == "Kritiek":
@@ -49,30 +46,15 @@ for i in range(0, nrows1_kritiek):
     else:
         station.append(False)
 
-    
     list_met_stations.append(station)
 
 
-#""" PLAATS ALLE STATIONS IN LIST """
-#list_met_stations = []
-#for i in list_met_connecties:
-#    if i[0] not in list_met_stations:
-#        list_met_stations.append(i[0])
-#    if i[1] not in list_met_stations:
-#        list_met_stations.append(i[1])
-#        
 print(list_met_stations)
-
-#""" PLAATS ALLE KRITIEKE STATIONS IN LIJST """
-#list_met_kritieke_stations = []
-#for i in range(0, nrows1_kritiek):
-#    if sheet1_kritiek.row_values(i)[0].split(',')[-1] == "Kritiek":
-#        list_met_kritieke_stations.append(sheet1_kritiek.row_values(i)[0].split(',')[0])
-#        
-##print(list_met_kritieke_stations)
 # 
 #    ####### CLASSES INDELEN
-#    
+#
+
+""" ONDERSTAANDE MATRIXSHIT WAARSCHIJNLIJK NIET MEER NODIG """    
 #""" MAAK LEGE MATRIX """
 #matrix = []
 #for i in range(0, len(list_met_stations) + 1):
