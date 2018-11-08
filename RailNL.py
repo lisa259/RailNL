@@ -13,28 +13,28 @@ bestand_connecties = xlrd.open_workbook(naam_connecties)
 sheet1_connecties = bestand_connecties.sheet_by_index(0)
 nrows1_connecties = sheet1_connecties.nrows
 
-""" IMPORT STATIONS BESTAND """
-naam_stations = os.path.join(os.path.dirname(__file__), 'StationsHolland.xlsx')
-bestand_stations = xlrd.open_workbook(naam_stations)
-sheet1_stations = bestand_stations.sheet_by_index(0)
+""" IMPORT STATIONS FILE """
+name_stations = os.path.join(os.path.dirname(__file__), 'StationsHolland.xlsx')
+file_stations = xlrd.open_workbook(name_stations)
+sheet1_stations = file_stations.sheet_by_index(0)
 nrows1_stations = sheet1_stations.nrows
 
-""" PLAATS ALLE CONNECTIES ALS LIST IN LIST """
-list_met_connecties = []
+""" PUT ALL CONNECTIONS LIKE LIST IN LIST """
+list_with_connections = []
 for i in range(0, nrows1_connecties):
     # van ['plaats1, plaats2, afstand'] naar 'plaats1, plaats2, afstand'
     string = sheet1_connecties.row_values(i)[0] 
     
     # van 'plaats1, plaats2, afstand' naar ["plaats1", "plaats2", "afstand"] 
-    connectie = string.split(',')
+    connection = string.split(',')
     
     # van ["plaats1", "plaats2", "afstand"] naar ["plaats1", "plaats2", afstand] 
-    connectie[2] = int(connectie[2])
+    connection[2] = int(connection[2])
     
-    list_met_connecties.append(connectie)
+    list_with_connections.append(connection)
     
-""" PLAATS ALLE STATIONS + BOOLEAN OF KRITIEK IN LIST"""
-list_met_stations = []
+""" PUT ALL STATIONS + BOOLEAN OF CRITIC IN LIST"""
+list_with_stations = []
 for i in range(0, nrows1_stations):
     # van ['station, x, y, (Kritiek)'] naar 'station, x, y, (Kritiek)'
     string = sheet1_stations.row_values(i)[0] 
@@ -47,13 +47,77 @@ for i in range(0, nrows1_stations):
     else:
         station.append(False)
 
-    list_met_stations.append(station)
+    list_with_stations.append(station)
+
+print(list_with_connections)
+#print(list_with_stations)
 
 
-#print(list_met_stations)
-# 
-#    ####### CLASSES INDELEN
-#
+""" PUT ALL INFORMATION IN CLASSES """
+
+class CONNECTION:
+    def __init__(self, station1, station2, duration):
+        self.station1 = station1
+        self.station2 = station2
+        self.duration = duration
+        self.critic = False
+        self.used = False
+
+#empty list for classes connections
+classes_connections = []
+for i in range(0, len(list_with_connections)):
+    connection = CONNECTION(list_with_connections[i][0], list_with_connections[i][1], list_with_connections[i][2],)
+    classes_connections.append(connection)
+    
+#print(classes_connections[0].critic)
+
+class STATION:
+    def __init__(self, name, critic, connections):
+        self.name = name
+        self.critic = critic
+        self.used = False
+        self.connections = connections
+        
+#empty list for classes stations
+classes_stations = []
+for i in range(0, len(list_with_stations)):
+    #empty list for connections conected to a station
+    connections_station = []
+    #iterate over all connections
+    for j in range(0, len(classes_connections)):
+        name = list_with_stations[i][0]
+        #if name of station in connection on place station1 or station 2
+        if name in classes_connections[j].station1 or name in classes_connections[j].station2:
+            #append this connection to connection list of the station
+            connections_station.append(classes_connections[j])
+    #make class
+    station = STATION(list_with_stations[i][0], list_with_stations[i][1], connections_station)
+    classes_stations.append(station)
+    
+#print(classes_stations[0].connections[1].station2)
+
+#critic of connections change
+for i in range(0, len(classes_connections)):
+    # save name station1
+    station1 = classes_connections[i].station1
+    station2 = classes_connections[i].station2
+    #iterate over all stations
+    for j in range (0, len(classes_stations)):
+        # if station1 is the station and station is critic
+        if classes_stations[j].name == station1 and classes_stations[j].critic == True:
+            # connection is critic
+            classes_connections[i].critic = True
+        elif classes_stations[j].name == station2 and classes_stations[j].critic == True:
+            classes_connections[i].critic = True
+
+#print(classes_connections[24].station1)
+#print(classes_connections[24].station2)
+#print(classes_connections[24].critic)
+        
+class TRAJECT:
+    def __init__(self, stations, total_time):
+        self.stations = stations
+        self.total_time = total_time
 
 """ ONDERSTAANDE MATRIXSHIT WAARSCHIJNLIJK NIET MEER NODIG """    
 #""" MAAK LEGE MATRIX """
