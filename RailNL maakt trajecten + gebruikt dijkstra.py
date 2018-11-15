@@ -168,6 +168,24 @@ def linken(stations):
             return True
     return False
         
+def doelfunctie():
+    aantalkritiek = 0
+    aantalgebruikt = 0
+    for connection in list_with_connections:
+        if connection.critic:
+            aantalkritiek += 1
+            if connection.used:
+                aantalgebruikt += 1
+    p = aantalgebruikt / aantalkritiek
+    
+    T = len(list_with_trajects)
+    
+    Min = 0
+    for traject in list_with_trajects:
+        Min += traject.total_time
+        
+    return (p * 10000 - T * 20 - Min / 10)
+
 
 """ PUT ALL CONNECTIONS LIKE CONNECTION OBJECT IN LIST """
 list_with_connections = []
@@ -231,3 +249,5 @@ for traject in list_with_trajects:
 for i in list_with_connections:   
   if i.used == False and i.critic == True:     
       print(i.station1 + " - " + i.station2 + "  worden niet gebruikt")
+      
+print(doelfunctie())
