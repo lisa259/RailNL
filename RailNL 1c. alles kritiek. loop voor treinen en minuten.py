@@ -1,18 +1,38 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Fri Nov 16 16:28:29 2018
 
+@author: My Lenovo
+"""
+
+# -*- coding: utf-8 -*-
+"""
+Created on Fri Nov 16 15:35:43 2018
+
+@author: My Lenovo
+"""
+
+# -*- coding: utf-8 -*-
+"""
+Created on Tue Nov  6 14:26:50 2018
+
+@author: My Lenovo
+"""
 import os
-import csv
+import xlrd
 import math
 
 " IMPORT CONNECTIES FILE "
-naam_connecties = os.path.join(os.path.dirname(__file__), 'ConnectiesHolland.csv')
-bestand_connecties = open(naam_connecties, encoding='utf-8-sig')
-all_connections = csv.reader(bestand_connecties)
+naam_connecties = os.path.join(os.path.dirname(__file__), 'ConnectiesHolland.xlsx')
+bestand_connecties = xlrd.open_workbook(naam_connecties)
+sheet1_connecties = bestand_connecties.sheet_by_index(0)
+nrows1_connecties = sheet1_connecties.nrows
 
 " IMPORT STATIONS FILE "
-name_stations = os.path.join(os.path.dirname(__file__), 'StationsHolland.csv')
-file_stations = open(name_stations, encoding='utf-8-sig')
-all_stations = csv.reader(file_stations)
-
+name_stations = os.path.join(os.path.dirname(__file__), 'StationsHolland.xlsx')
+file_stations = xlrd.open_workbook(name_stations)
+sheet1_stations = file_stations.sheet_by_index(0)
+nrows1_stations = sheet1_stations.nrows
 
 " CLASSES "
 class CONNECTION:
@@ -217,7 +237,7 @@ def doelfunctie():
 
 tot = []
 maxdoel = 0
-for gfd in range(1, 10):
+for gfd in range(1, 5):
     for tyu in range(200, 0, -1):
         " RESTRICTIES LIJNVOERING "
         MAX_AANTAL_TREINEN = gfd
@@ -226,26 +246,32 @@ for gfd in range(1, 10):
         
         " PUT ALL CONNECTIONS LIKE CONNECTION OBJECT IN LIST "
         list_with_connections = []
-        for connection in all_connections:
-            list_with_connections.append(CONNECTION(connection[0], connection[1], int(connection[2])))
+        for i in range(0, nrows1_connecties):
+            # van ['plaats1, plaats2, afstand'] naar ["plaats1", "plaats2", "afstand"] 
+            splitted = sheet1_connecties.row_values(i)[0].split(',')
+            
+            list_with_connections.append(CONNECTION(splitted[0], splitted[1], int(splitted[2])))
             
         
             
         " PUT ALL STATIONS LIKE STATION OBJECT IN LIST "
         list_with_stations = []
-        for station in all_stations:
-            if station[-1] == "Kritiek":
+        for i in range(0, nrows1_stations):
+            # van ['station, x, y, (Kritiek)'] naar ["station", "x", "y", "(Kritiek)"]
+            splitted = sheet1_stations.row_values(i)[0].split(',')
+            
+            if splitted[-1] == "Kritiek":
                 boolean = True
             else:
                 boolean = False
         
             connections = []
             for conn in list_with_connections:
-                if station[0] == conn.station1 or station[0] == conn.station2:
+                if splitted[0] == conn.station1 or splitted[0] == conn.station2:
                     connections.append(conn)
                     if boolean == True:
                         conn.setCritic(boolean)
-            list_with_stations.append(STATION(station[0], boolean, connections))
+            list_with_stations.append(STATION(splitted[0], boolean, connections))
                
         " CREATE X AMOUNT OF TRAJECTS "
         list_with_trajects = []  
