@@ -237,7 +237,7 @@ def doelfunctie():
 
 tot = []
 maxdoel = 0
-for gfd in range(1, 10):
+for gfd in range(1, 5):
     for tyu in range(200, 0, -1):
         " RESTRICTIES LIJNVOERING "
         MAX_AANTAL_TREINEN = gfd
