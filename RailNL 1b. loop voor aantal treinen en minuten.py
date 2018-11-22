@@ -91,7 +91,7 @@ def new_connection(station1, station2, traject):
             minimum = conn.duration
             shortest = conn
     # spoor gevonden en valt nog binnen de tijd: toevoegen aan traject
-    if shortest != None and traject.total_time + minimum <= MAX_AANTAL_MINUTEN:
+    if shortest != None: # and traject.total_time + minimum <= MAX_AANTAL_MINUTEN: ############
         if station1 == shortest.station1:
             traject.addStation(shortest.station2, "begin")
         elif station1 == shortest.station2:
