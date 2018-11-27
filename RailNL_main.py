@@ -5,13 +5,14 @@ from functies.def_new_traject import new_traject
 from functies.def_importeren import importeren
 from functies.def_linken import linken
 from functies.def_doelfunctie import doelfunctie
+from functies.def_plotten import plotten
 
 #exportfile = open('export.csv', 'a')
 
 
-OPDRACHT = "1c"  # "1a", "1b", "1c"
+OPDRACHT = "1a"  # "1a", "1b", "1c"
 TRAJECT_OPSTELLEN = "random"  # "min", "max", "random"
-TRAJECT_UITBREIDEN = "min"  # "min", "max", "random"
+TRAJECT_UITBREIDEN = "random"  # "min", "max", "random"
 
 if TRAJECT_OPSTELLEN == "random" or TRAJECT_UITBREIDEN == "random":
     aantalLoops = 100
@@ -52,7 +53,7 @@ for station in all_stations:
             connections.append(conn)
             if boolean:
                 conn.setCritic(boolean)
-    list_with_stations.append(STATION(station[0], boolean, connections))
+    list_with_stations.append(STATION(station[0], boolean, connections, station[1], station[2]))
 
 
 maxdoel = 0
@@ -75,7 +76,6 @@ for treinen in range(MIN_TREINEN, MAX_TREINEN + 1):
             " CREATE X AMOUNT OF TRAJECTS "
             list_with_trajects = []  
             while len(list_with_trajects) < MAX_AANTAL_TREINEN:
-                #print("len = {}".format(len(list_with_trajects)))
                 # aanroepen functie new_traject voor opstellen traject
                 new = new_traject(list_with_connections, TRAJECT_OPSTELLEN)
                 if new != False:
@@ -96,6 +96,7 @@ for treinen in range(MIN_TREINEN, MAX_TREINEN + 1):
                     if linken([i.station1, i.station2], i.duration, list_with_trajects, list_with_stations, MAX_AANTAL_MINUTEN):
                         i.setUsed(True)
             
+#            exportfile.write("\n")
             " PRINT UNUSED CONNECTIONS " 
             aantal = 0
             for i in list_with_connections: 
@@ -122,17 +123,34 @@ for treinen in range(MIN_TREINEN, MAX_TREINEN + 1):
                 aant = aantal
                 traj = list_with_trajects
 
-" PRINT BEST FINAL TRAJECTS "                   
+
+xen = []
+yen = []
+" PRINT & PLOT BEST FINAL TRAJECTS "                   
 print("___________TRAJECTEN:___________")
 for traject in traj:
     print(traject.stations)
     print(traject.total_time)
     print("")
+    x = []
+    y = []
+    for station in traject.stations:
+        for stat in list_with_stations:
+            if stat.name == station:
+                x.append(float(stat.x))
+                y.append(float(stat.y))
+    xen.append(x)
+    yen.append(y)
+
+
+
 
 print(OPDRACHT)    
 print(trei)
 print(minu)
 print(maxdoel)     
 print(aantal)
+
+plotten(OPDRACHT, xen, yen)
 
 #exportfile.close() 

@@ -1,6 +1,7 @@
 class STATION:
-    def __init__(self, name, critic, connections):
+    def __init__(self, name, critic, connections, x, y):
         self.name = name
-        self.critic = critic # SET TRUE VOOR ALLES KRITIEK
-#        self.used = False
+        self.critic = critic 
+        self.x = x
+        self.y = y
         self.connections = connections
