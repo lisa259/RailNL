@@ -6,13 +6,15 @@ from functies.def_importeren import importeren
 from functies.def_linken import linken
 from functies.def_doelfunctie import doelfunctie
 from functies.def_plotten import plotten
+from functies.def_hill_climbing import hill_climbing
+from copy import deepcopy
 
 #exportfile = open('export.csv', 'a')
 
 
 OPDRACHT = "1a"  # "1a", "1b", "1c"
-TRAJECT_OPSTELLEN = "random"  # "min", "max", "random"
-TRAJECT_UITBREIDEN = "random"  # "min", "max", "random"
+TRAJECT_OPSTELLEN = "min"  # "min", "max", "random"
+TRAJECT_UITBREIDEN = "min"  # "min", "max", "random"
 
 if TRAJECT_OPSTELLEN == "random" or TRAJECT_UITBREIDEN == "random":
     aantalLoops = 100
@@ -29,6 +31,11 @@ elif OPDRACHT == "1b" or OPDRACHT == "1c":
     MAX_TREINEN = 6
     MIN_MINUTEN = 1
     MAX_MINUTEN = 120
+elif OPDRACHT == "1d":
+    MIN_TREINEN = 12
+    MAX_TREINEN = 12
+    MIN_MINUTEN = 120
+    MAX_MINUTEN = 120
 
 bestanden = importeren(OPDRACHT)
 all_connections = bestanden[0]
@@ -37,12 +44,12 @@ all_stations = bestanden[1]
 " PUT ALL CONNECTIONS LIKE CONNECTION OBJECT IN LIST "
 list_with_connections = []
 for connection in all_connections:
-    list_with_connections.append(CONNECTION(connection[0], connection[1], int(connection[2])))
+    list_with_connections.append(CONNECTION(connection[0], connection[1], float(connection[2])))
     
 " PUT ALL STATIONS LIKE STATION OBJECT IN LIST "
 list_with_stations = []
 for station in all_stations:
-    if station[-1] == "Kritiek" or OPDRACHT in ["1c"]:
+    if station[-1] == "Kritiek" or OPDRACHT in ["1c", "1f"]:
         boolean = True
     else:
         boolean = False
@@ -52,11 +59,12 @@ for station in all_stations:
         if station[0] == conn.station1 or station[0] == conn.station2:
             connections.append(conn)
             if boolean:
+                aantal += 1
                 conn.setCritic(boolean)
     list_with_stations.append(STATION(station[0], boolean, connections, station[1], station[2]))
 
 
-maxdoel = 0
+maximum_doelwaarde = 0
 
 for treinen in range(MIN_TREINEN, MAX_TREINEN + 1):
     for minuutjes in range(MIN_MINUTEN, MAX_MINUTEN + 1):
@@ -116,19 +124,23 @@ for treinen in range(MIN_TREINEN, MAX_TREINEN + 1):
 #            exportfile.write("\n")
             
             doel = doelfunctie(list_with_connections, list_with_trajects)
-            if doel >= maxdoel:
-                maxdoel = doel
-                trei = treinen
-                minu = minuutjes
-                aant = aantal
-                traj = list_with_trajects
+            if doel >= maximum_doelwaarde:
+                maximum_doelwaarde = doel
+                treinen_save = treinen
+                minuten_save = minuutjes
+                aantal_save = aantal
+                trajecten_save = deepcopy(list_with_trajects)
+                connecties_save = deepcopy(list_with_connections)
 
+
+list_with_trajects = deepcopy(trajecten_save)
+list_with_connections = deepcopy(connecties_save)
 
 xen = []
 yen = []
 " PRINT & PLOT BEST FINAL TRAJECTS "                   
 print("___________TRAJECTEN:___________")
-for traject in traj:
+for traject in list_with_trajects:
     print(traject.stations)
     print(traject.total_time)
     print("")
@@ -143,14 +155,18 @@ for traject in traj:
     yen.append(y)
 
 
-
-
 print(OPDRACHT)    
-print(trei)
-print(minu)
-print(maxdoel)     
-print(aantal)
+print(treinen_save)
+print(minuten_save)
+print(maximum_doelwaarde)     
+print(aantal_save)
 
 plotten(OPDRACHT, xen, yen)
 
+for i in range(100):
+    resultaat = hill_climbing(list_with_trajects, list_with_stations, list_with_connections)
+    if resultaat != False:
+        list_with_trajects = deepcopy(resultaat)
+        
 #exportfile.close() 
+print(doelfunctie(list_with_connections, list_with_trajects))

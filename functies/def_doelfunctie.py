@@ -17,5 +17,6 @@ def doelfunctie(list_with_connections, list_with_trajects):
     Min = 0
     for traject in list_with_trajects:
         Min += traject.total_time
+#    print("{}, {}, {}".format(p, T, Min))
     
     return (p * 10000 - T * 20 - Min / 10)
