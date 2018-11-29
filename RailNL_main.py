@@ -12,12 +12,12 @@ from copy import deepcopy
 #exportfile = open('export.csv', 'a')
 
 
-OPDRACHT = "1a"  # "1a", "1b", "1c"
-TRAJECT_OPSTELLEN = "min"  # "min", "max", "random"
-TRAJECT_UITBREIDEN = "min"  # "min", "max", "random"
+OPDRACHT = "1c"  # "1a", "1b", "1c"
+TRAJECT_OPSTELLEN = "random"  # "min", "max", "random"
+TRAJECT_UITBREIDEN = "random"  # "min", "max", "random"
 
 if TRAJECT_OPSTELLEN == "random" or TRAJECT_UITBREIDEN == "random":
-    aantalLoops = 100
+    aantalLoops = 5000
 else:
     aantalLoops = 1
 
@@ -27,15 +27,15 @@ if OPDRACHT == "1a":
     MIN_MINUTEN = 120
     MAX_MINUTEN = 120
 elif OPDRACHT == "1b" or OPDRACHT == "1c":
-    MIN_TREINEN = 1
-    MAX_TREINEN = 6
-    MIN_MINUTEN = 1
-    MAX_MINUTEN = 120
+    MIN_TREINEN = 4
+    MAX_TREINEN = 4
+    MIN_MINUTEN = 100
+    MAX_MINUTEN = 100
 elif OPDRACHT == "1d":
-    MIN_TREINEN = 12
-    MAX_TREINEN = 12
-    MIN_MINUTEN = 120
-    MAX_MINUTEN = 120
+    MIN_TREINEN = 13
+    MAX_TREINEN = 13
+    MIN_MINUTEN = 180
+    MAX_MINUTEN = 180
 
 bestanden = importeren(OPDRACHT)
 all_connections = bestanden[0]
@@ -45,11 +45,12 @@ all_stations = bestanden[1]
 list_with_connections = []
 for connection in all_connections:
     list_with_connections.append(CONNECTION(connection[0], connection[1], float(connection[2])))
-    
+   
+
 " PUT ALL STATIONS LIKE STATION OBJECT IN LIST "
 list_with_stations = []
 for station in all_stations:
-    if station[-1] == "Kritiek" or OPDRACHT in ["1c", "1f"]:
+    if station[-1] == "Kritiek" or OPDRACHT in ["1c", "1e"]:
         boolean = True
     else:
         boolean = False
@@ -59,10 +60,8 @@ for station in all_stations:
         if station[0] == conn.station1 or station[0] == conn.station2:
             connections.append(conn)
             if boolean:
-                aantal += 1
                 conn.setCritic(boolean)
     list_with_stations.append(STATION(station[0], boolean, connections, station[1], station[2]))
-
 
 maximum_doelwaarde = 0
 
