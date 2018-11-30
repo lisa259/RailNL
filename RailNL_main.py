@@ -7,6 +7,7 @@ from functies.def_linken import linken
 from functies.def_doelfunctie import doelfunctie
 from functies.def_plotten import plotten
 from functies.def_hill_climbing import hill_climbing
+from functies.def_simulated_annealing import simulated_annealing
 from copy import deepcopy
 
 #exportfile = open('export.csv', 'a')
