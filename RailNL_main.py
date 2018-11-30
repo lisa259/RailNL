@@ -12,7 +12,7 @@ from copy import deepcopy
 #exportfile = open('export.csv', 'a')
 
 
-OPDRACHT = "1c"  # "1a", "1b", "1c"
+OPDRACHT = "1e"  # "1a", "1b", "1c"
 TRAJECT_OPSTELLEN = "random"  # "min", "max", "random"
 TRAJECT_UITBREIDEN = "random"  # "min", "max", "random"
 
@@ -32,8 +32,13 @@ elif OPDRACHT == "1b" or OPDRACHT == "1c":
     MIN_MINUTEN = 100
     MAX_MINUTEN = 100
 elif OPDRACHT == "1d":
-    MIN_TREINEN = 13
-    MAX_TREINEN = 13
+    MIN_TREINEN = 9
+    MAX_TREINEN = 9
+    MIN_MINUTEN = 180
+    MAX_MINUTEN = 180
+elif OPDRACHT == "1e":
+    MIN_TREINEN = 12
+    MAX_TREINEN = 12    
     MIN_MINUTEN = 180
     MAX_MINUTEN = 180
 
@@ -61,7 +66,7 @@ for station in all_stations:
             connections.append(conn)
             if boolean:
                 conn.setCritic(boolean)
-    list_with_stations.append(STATION(station[0], boolean, connections, station[1], station[2]))
+    list_with_stations.append(STATION(station[0], boolean, connections, station[2], station[1]))
 
 maximum_doelwaarde = 0
 
@@ -91,12 +96,23 @@ for treinen in range(MIN_TREINEN, MAX_TREINEN + 1):
                 else:
                     break
             
+            " per traject helemaal opstellen "
             for traject in list_with_trajects:
                 # aanroepen methode new_connection voor uitbreiden traject
                 while True: 
                     if not traject.new_connection(list_with_connections, MAX_AANTAL_MINUTEN, TRAJECT_UITBREIDEN):
                         break
             
+            " per traject telkens maar 1 connectie toevoegen "
+#            grens = [True] * len(list_with_trajects)
+#            
+#            while True in grens:
+#                for i in range(0, len(list_with_trajects)):
+#                    if grens[i] == True:
+#                        if not list_with_trajects[i].new_connection(list_with_connections, MAX_AANTAL_MINUTEN, TRAJECT_UITBREIDEN):
+#                            grens[i] = False
+                 
+                    
             " TRY TO ADD UNUSED CRITIC CONNECTIONS TO EXISTING TRAJECTS "
             for i in list_with_connections:   
                 if i.used == False and i.critic == True:
