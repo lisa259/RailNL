@@ -13,12 +13,12 @@ from copy import deepcopy
 #exportfile = open('export.csv', 'a')
 
 
-OPDRACHT = "1d"  # "1a", "1b", "1c"
-TRAJECT_OPSTELLEN = "random"  # "min", "max", "random"
-TRAJECT_UITBREIDEN = "random"  # "min", "max", "random"
+OPDRACHT = "1e"                 # "1a", "1b", "1c", "1d", "1e"
+TRAJECT_OPSTELLEN = "random"    # "min", "max", "random"
+TRAJECT_UITBREIDEN = "random"   # "min", "max", "random"
 
 if TRAJECT_OPSTELLEN == "random" or TRAJECT_UITBREIDEN == "random":
-    aantalLoops = 5000
+    aantalLoops = 500
 else:
     aantalLoops = 1
 
@@ -30,8 +30,8 @@ if OPDRACHT == "1a":
 elif OPDRACHT == "1b" or OPDRACHT == "1c":
     MIN_TREINEN = 4
     MAX_TREINEN = 4
-    MIN_MINUTEN = 105
-    MAX_MINUTEN = 106
+    MIN_MINUTEN = 120
+    MAX_MINUTEN = 120
 elif OPDRACHT == "1d":
     MIN_TREINEN = 9
     MAX_TREINEN = 9
@@ -117,8 +117,10 @@ for treinen in range(MIN_TREINEN, MAX_TREINEN + 1):
             " TRY TO ADD UNUSED CRITIC CONNECTIONS TO EXISTING TRAJECTS "
             for i in list_with_connections:   
                 if i.used == False and i.critic == True:
-                    if linken([i.station1, i.station2], i.duration, list_with_trajects, list_with_stations, MAX_AANTAL_MINUTEN):
+                    if linken([i.station1, i.station2], i.duration, list_with_trajects, list_with_stations, MAX_AANTAL_MINUTEN, doelfunctie(list_with_connections, list_with_trajects), list_with_connections, list_with_connections.index(i)):
                         i.setUsed(True)
+            
+            
             
 #            exportfile.write("\n")
             " PRINT UNUSED CONNECTIONS " 
