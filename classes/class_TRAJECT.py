@@ -25,7 +25,7 @@ class TRAJECT:
             # spoor gevonden en valt nog binnen de tijd: toevoegen aan traject
             while lijstje:
                 gebruiken = random.choice(lijstje)
-                if self.total_time + conn.duration <= 120:
+                if self.total_time + gebruiken.duration <= MAX_AANTAL_MINUTEN:
                     if self.stations[0] == gebruiken.station1:
                         self.addStation(gebruiken.station2, "begin")
                     elif self.stations[0] == gebruiken.station2:
