@@ -181,6 +181,7 @@ plotten(OPDRACHT, xen, yen)
 
 for i in range(100):
     resultaat = hill_climbing(list_with_trajects, list_with_stations, list_with_connections)
+    resultaat = simulated_annealing(list_with_trajects, list_with_stations, list_with_connections)
     if resultaat != False:
         list_with_trajects = deepcopy(resultaat)
         
