@@ -2,7 +2,7 @@
 
 import matplotlib.pyplot as plt
 
-def plotten(OPDRACHT, x_punten, y_punten):
+def plotten(OPDRACHT, x_punten, y_punten, x_unused, y_unused):
     if OPDRACHT in ["1a", "1b", "1c"]:
         y_min = 51.80722046 - 0.1
         y_max = 52.95527649 + 0.1       # 1,14805603
@@ -18,6 +18,11 @@ def plotten(OPDRACHT, x_punten, y_punten):
     
     for i in range(len(x_punten)):
         plt.plot(x_punten[i], y_punten[i])
+        
+    for i in range(len(x_unused)):
+
+        plt.plot(x_unused[i], y_unused[i], 'k:')
+        
     plt.show()
     
 #plotten("1a", [[52.00666809, 52.08027649, 52.16611099, 52.08027649, 52.01750183]], [[4.356389046, 4.324999809, 4.481666565, 4.324999809, 4.704444408]])

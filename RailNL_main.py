@@ -13,12 +13,12 @@ from copy import deepcopy
 #exportfile = open('export.csv', 'a')
 
 
-OPDRACHT = "1e"  # "1a", "1b", "1c"
-TRAJECT_OPSTELLEN = "random"  # "min", "max", "random"
-TRAJECT_UITBREIDEN = "random"  # "min", "max", "random"
+OPDRACHT = "1e"                 # "1a", "1b", "1c", "1d", "1e"
+TRAJECT_OPSTELLEN = "random"    # "min", "max", "random"
+TRAJECT_UITBREIDEN = "random"   # "min", "max", "random"
 
 if TRAJECT_OPSTELLEN == "random" or TRAJECT_UITBREIDEN == "random":
-    aantalLoops = 5000
+    aantalLoops = 500
 else:
     aantalLoops = 1
 
@@ -30,8 +30,8 @@ if OPDRACHT == "1a":
 elif OPDRACHT == "1b" or OPDRACHT == "1c":
     MIN_TREINEN = 4
     MAX_TREINEN = 4
-    MIN_MINUTEN = 100
-    MAX_MINUTEN = 100
+    MIN_MINUTEN = 120
+    MAX_MINUTEN = 120
 elif OPDRACHT == "1d":
     MIN_TREINEN = 9
     MAX_TREINEN = 9
@@ -117,15 +117,30 @@ for treinen in range(MIN_TREINEN, MAX_TREINEN + 1):
             " TRY TO ADD UNUSED CRITIC CONNECTIONS TO EXISTING TRAJECTS "
             for i in list_with_connections:   
                 if i.used == False and i.critic == True:
-                    if linken([i.station1, i.station2], i.duration, list_with_trajects, list_with_stations, MAX_AANTAL_MINUTEN):
+                    if linken([i.station1, i.station2], i.duration, list_with_trajects, list_with_stations, MAX_AANTAL_MINUTEN, doelfunctie(list_with_connections, list_with_trajects), list_with_connections, list_with_connections.index(i)):
                         i.setUsed(True)
+            
+            
             
 #            exportfile.write("\n")
             " PRINT UNUSED CONNECTIONS " 
             aantal = 0
+            x_unused = []
+            y_unused = []
             for i in list_with_connections: 
                 if i.used == False and i.critic == True:    
                     aantal += 1
+                    x = []
+                    y = []
+                    for s in list_with_stations:
+                        if s.name == i.station1:
+                            x.append(float(s.x))
+                            y.append(float(s.y))
+                        elif s.name == i.station2:
+                            x.append(float(s.x))
+                            y.append(float(s.y))
+                    x_unused.append(x)
+                    y_unused.append(y)
 #                    exportfile.write(i.station1 + "  -  " + i.station2 + "\n")
                    
             
@@ -147,6 +162,8 @@ for treinen in range(MIN_TREINEN, MAX_TREINEN + 1):
                 aantal_save = aantal
                 trajecten_save = deepcopy(list_with_trajects)
                 connecties_save = deepcopy(list_with_connections)
+                x_unused_save = x_unused
+                y_unused_save = y_unused
 
 
 list_with_trajects = deepcopy(trajecten_save)
@@ -177,7 +194,7 @@ print(minuten_save)
 print(maximum_doelwaarde)     
 print(aantal_save)
 
-plotten(OPDRACHT, xen, yen)
+plotten(OPDRACHT, xen, yen, x_unused_save, y_unused_save)
 
 for i in range(100):
     resultaat = hill_climbing(list_with_trajects, list_with_stations, list_with_connections)
