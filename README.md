@@ -7,9 +7,9 @@ De opdrachten zijn als volgt:
 1b) Optimaliseer het antwoord van a met behulp van de volgende formule:
 
 > (maximaliseer) K = p*10000 - (T*20 + Min/10)
-   p = fractie van hoeveel kritieke verbindingen bereden worden
-   T = aantal treinen (trajecten)
-   Min = tijdsduur van alle treinen samen in minuten
+> p = fractie van hoeveel kritieke verbindingen bereden worden
+> T = aantal treinen (trajecten)
+> Min = tijdsduur van alle treinen samen in minuten
 
 1c) Ga er nu vanuit dat alle verbindingen kritiek zijn. Hoe hoog kun je K maken?
 
@@ -29,6 +29,7 @@ Alle in Python geschreven code staat in het mapje code.
 Om de code te runnen gebruik de volgende instructie:
 
 > volgt nog.....
+
 
 ## Auteurs
 Lisa Beek en Dorinda van den Dool
