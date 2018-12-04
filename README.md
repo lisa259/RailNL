@@ -1,57 +1,42 @@
-# Heuristieken
-## RailNL
+#Heuristieken project
+## Case RailNL
 
-### De opdracht
+De opdrachten zijn als volgt:
+1a) Stel een lijnvoering op voor Noord- en Zuid-Holland met maximaal 7 trajecten waarbij alle trajecten binnen
+    120 minuten gereden moeten worden en alle kritieke verbindingen moeten bereden worden.
+1b) Optimaliseer het antwoord van a met behulp van de volgende formule:
 
- 
-Opdracht 1:
+> (maximaliseer) K = p*10000 - (T*20 + Min/10)
+   p = fractie van hoeveel kritieke verbindingen bereden worden
+   T = aantal treinen (trajecten)
+   Min = tijdsduur van alle treinen samen in minuten
 
-a) Een lijnvoering opstellen voor Noord- en Zuid-Holland met maximaal 7 trajecten waarbij alle kritieke verbindingen bereden moet worden.
+1c) Ga er nu vanuit dat alle verbindingen kritiek zijn. Hoe hoog kun je K maken?
 
-b) De lijnvoering optimaliseren met behulp van de doelfunctie (K zo hoog mogelijk) die als volgt is:
+2d) Maak een lijnvoering voor heel Nederland met maximaal 20 trajecten waarbij alle trajecten binnen
+    180 minuten gereden moeten worden en alle kritieke verbinden moeten bereden worden. Met K zo hoog mogelijk.
+2e) Doe hetzelfde waarbij je alle verbindingen voor kritiek houd.
 
-> De doelfunctie voor de kwaliteit van de lijnvoering geldt als volgt:
+## Getting Started
 
-K = p * 10000 - T * 20 - Min / 10    (waarbij K=kwaliteit, p = fractie gebruikte kritieke sporen, t = aantal treinen, Min = aantal minuten)
+### Vereisten
+De code is geschreven in Python 3.6. 
 
-De lowerbound wordt bereikt wanneer:
-- Geen enkel kritiek spoor bereden wordt (p = 0).
-- Het maximum aantal treinen wordt ingezet.
-- Het maximum aantal minuten (per traject) wordt bereikt.
+### Structuur
+Alle in Python geschreven code staat in het mapje code. 
 
-De upperbound wordt bereikt wanneer:
-- Ieder kritiek spoor bereden wordt (p = 1).
-- Zo min mogelijk treinen worden ingezet.
-- Zo min mogelijk minuten worden gebruikt.
+### Test
+Om de code te runnen gebruik de volgende instructie:
 
-c) Ga ervan uit dat alle sporen kritiek zijn in Noord- en Zuid-Holland. Hoe hoog kun je K maken?
+> volgt nog.....
 
- 
-### Lower- en upperbounds
-  
-**1a/b.** 
-> lowerbound:  
-p = 0    
-t = 7  
-Min = 7 * 120   
-K = 0 * 1000 - 7 * 20 - 7 * 120 / 10 = -224       
-        
-> upperbound:      
-p = 1      
-t = 287 / 120 omhoog afronden = 3        
-Min = 287       
-K = q * 1000 - 3 * 20 - 287 / 10 = 9911,3  
-       
-**1c.**  
-> lowerbound:  
-p = 0
-t = 7  
-Min = 7 * 120   
-K = 0 * 1000 - 7 * 20 - 7 * 120 / 10 = -224  
+## Auteurs
+Lisa Beek en Dorinda van den Dool
 
-> upperbound:      
-p = 1      
-t = 381 / 120 omhoog afronden = 4       
-Min = 381       
-K = q * 1000 - 4 * 20 - 381 / 10 = 9881,9  
+## Dankwoord
+Minor Programmeren van de UvA.
+
+
+
+
 
