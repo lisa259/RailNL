@@ -1,20 +1,32 @@
 # Heuristieken
 ## RailNL
 
-### Lower- en upperbounds
-  
-De doelfunctie voor de kwaliteit van de lijnvoering geldt als volgt:
+### De opdracht
+
+ 
+Opdracht 1:
+
+a) Een lijnvoering opstellen voor Noord- en Zuid-Holland met maximaal 7 trajecten waarbij alle kritieke verbindingen bereden moet worden.
+b) De lijnvoering optimaliseren met behulp van de doelfunctie (K zo hoog mogelijk) die als volgt is:
+
+> De doelfunctie voor de kwaliteit van de lijnvoering geldt als volgt:
+
 K = p * 10000 - T * 20 - Min / 10    (waarbij K=kwaliteit, p = fractie gebruikte kritieke sporen, t = aantal treinen, Min = aantal minuten)
-  
+
 De lowerbound wordt bereikt wanneer:
 - Geen enkel kritiek spoor bereden wordt (p = 0).
 - Het maximum aantal treinen wordt ingezet.
 - Het maximum aantal minuten (per traject) wordt bereikt.
-  
+
 De upperbound wordt bereikt wanneer:
 - Ieder kritiek spoor bereden wordt (p = 1).
 - Zo min mogelijk treinen worden ingezet.
 - Zo min mogelijk minuten worden gebruikt.
+
+c) Ga ervan uit dat alle sporen kritiek zijn in Noord- en Zuid-Holland. Hoe hoog kun je K maken?
+
+ 
+### Lower- en upperbounds
   
 **1a/b.** 
 > lowerbound:  
