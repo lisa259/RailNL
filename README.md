@@ -7,6 +7,7 @@
 Opdracht 1:
 
 a) Een lijnvoering opstellen voor Noord- en Zuid-Holland met maximaal 7 trajecten waarbij alle kritieke verbindingen bereden moet worden.
+
 b) De lijnvoering optimaliseren met behulp van de doelfunctie (K zo hoog mogelijk) die als volgt is:
 
 > De doelfunctie voor de kwaliteit van de lijnvoering geldt als volgt:
