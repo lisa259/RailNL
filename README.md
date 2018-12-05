@@ -17,9 +17,15 @@ De opdrachten zijn als volgt:
 
 1c) Ga er nu vanuit dat alle verbindingen kritiek zijn. Hoe hoog kun je K maken?
 
-2d) Maak een lijnvoering voor heel Nederland met maximaal 20 trajecten waarbij alle trajecten binnen
+1d) Maak een lijnvoering voor heel Nederland met maximaal 20 trajecten waarbij alle trajecten binnen
     180 minuten gereden moeten worden en alle kritieke verbinden moeten bereden worden. Met K zo hoog mogelijk.
-2e) Doe hetzelfde waarbij je alle verbindingen voor kritiek houd.
+1e) Doe hetzelfde waarbij je alle verbindingen voor kritiek houd.
+
+## State-space 
+Bij 1a/b/c is het aantal trajecten van zo lang mogelijke lengte en maximaal 120 minuten dat gemaakt kan worden 2737. Omdat er 7 trajecten gebruikt mogen worden is de statespace 7 boven 2737 = 2,265 * 10^20.  
+
+Bij 1d/e is het aantal trajecten van zo lang mogelijke lengte en maximaal 180 minuten dat gemaakt kan worden, is 3761642. Omdat er 20 trajecten gebruikt mogen worden is de statespace 20 boven 3761642 = 1,253* 10^53.  
+
 
 ## Getting Started
 
