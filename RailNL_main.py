@@ -23,8 +23,8 @@ else:
     aantalLoops = 1
 
 if OPDRACHT == "1a":
-    MIN_TREINEN = 5
-    MAX_TREINEN = 5
+    MIN_TREINEN = 4
+    MAX_TREINEN = 4
     MIN_MINUTEN = 120
     MAX_MINUTEN = 120
 elif OPDRACHT == "1b" or OPDRACHT == "1c":

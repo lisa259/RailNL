@@ -198,6 +198,7 @@ def simulated_annealing(list_with_trajects, list_with_stations, list_with_connec
                     return copy_list_with_trajects
                 else:
                     print("verslechtering")
+                    return copy_list_with_trajects
                     # tabu list vullen met wat we weg nemen
                     # in if vragen of toevoegende connecties in tabu list zitten
                     # zo niet, dan accepteren
