@@ -125,9 +125,9 @@ def simulated_annealing(list_with_trajects, list_with_stations, list_with_connec
                 # oude connecties opslaan station 1
                 if wissel1 == "binnen":
                     if copy_traject.stations[index1 - 1] != station2:
-                        oud1 = copy_traject.station[index1 - 1]
+                        oud1 = copy_traject.stations[index1 - 1]
                     else:
-                        oud1 = copy_traject.station[index1 + 1]
+                        oud1 = copy_traject.stations[index1 + 1]
                 elif wissel1 == "begin":
                     oud1 = copy_traject.stations[index1 + 1]
                 elif wissel1 == "eind":
@@ -161,26 +161,26 @@ def simulated_annealing(list_with_trajects, list_with_stations, list_with_connec
                
                 # nieuwe connecties opslaan station 1
                 if wissel2 == "binnen":
-                    if copy_traject.stations[index1 - 1].name != station2:
-                        nieuw1 = copy_traject.stations[index1 - 1]
+                    if copy_traject.stations[index2 - 1] != station2:
+                        nieuw1 = copy_traject.stations[index2 - 1]
                     else:
-                        nieuw1 = copy_traject.stations[index1 + 1]
+                        nieuw1 = copy_traject.stations[index2 + 1]
                 elif wissel2 == "eind":
-                    nieuw1 = copy_traject.stations[index1 - 1]
+                    nieuw1 = copy_traject.stations[index2 - 1]
                 elif wissel2 == "begin":
-                    nieuw1 = copy_traject.stations[index1 + 1]
+                    nieuw1 = copy_traject.stations[index2 + 1]
                 vergelijking1 = [station1, nieuw1]
                     
                 # nieuwe connecties opslaan station 2
                 if wissel1 == "binnen":
-                    if copy_traject.stations[index2 - 1].name != station1:
-                        nieuw2 = copy_traject.stations[index2 - 1]
+                    if copy_traject.stations[index1 - 1] != station1:
+                        nieuw2 = copy_traject.stations[index1 - 1]
                     else:
-                        nieuw2 = copy_traject.stations[index2 + 1]
+                        nieuw2 = copy_traject.stations[index1 + 1]
                 elif wissel1 == "eind":
-                    nieuw2 = copy_traject.stations[index2 - 1]
+                    nieuw2 = copy_traject.stations[index1 - 1]
                 elif wissel1 == "begin":
-                    nieuw2 = copy_traject.stations[index2 + 1]
+                    nieuw2 = copy_traject.stations[index1 + 1]
                 vergelijking2 = [station2, nieuw2]
 
                 if len(tabu) >= 1:
