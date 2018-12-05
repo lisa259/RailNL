@@ -10,10 +10,12 @@ from functies.def_hill_climbing import hill_climbing
 from functies.def_simulated_annealing import simulated_annealing
 from copy import deepcopy
 
+print("import")
+
 #exportfile = open('export.csv', 'a')
 
 
-OPDRACHT = "1e"                 # "1a", "1b", "1c", "1d", "1e"
+OPDRACHT = "1a"                 # "1a", "1b", "1c", "1d", "1e"
 TRAJECT_OPSTELLEN = "random"    # "min", "max", "random"
 TRAJECT_UITBREIDEN = "random"   # "min", "max", "random"
 
