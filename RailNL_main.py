@@ -10,6 +10,8 @@ from functies.def_hill_climbing import hill_climbing
 from functies.def_simulated_annealing import simulated_annealing
 from copy import deepcopy
 
+print("import")
+
 #exportfile = open('export.csv', 'a')
 
 
@@ -196,7 +198,11 @@ print(aantal_save)
 
 plotten(OPDRACHT, xen, yen, x_unused_save, y_unused_save)
 
+<<<<<<< HEAD
 for i in range(1000):
+=======
+for i in range(100):
+>>>>>>> eeb582fad8e41c2c77496e67c4916b65a865e3ac
     #resultaat = hill_climbing(list_with_trajects, list_with_stations, list_with_connections)
     resultaat = simulated_annealing(list_with_trajects, list_with_stations, list_with_connections)
     if resultaat != False:

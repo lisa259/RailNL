@@ -1,57 +1,53 @@
-# Heuristieken
-## RailNL
+#Heuristieken project
+## Case RailNL
 
-### De opdracht
+De opdrachten zijn als volgt:
+1a) Stel een lijnvoering op voor Noord- en Zuid-Holland met maximaal 7 trajecten waarbij alle trajecten binnen
+    120 minuten gereden moeten worden en alle kritieke verbindingen moeten bereden worden.
+1b) Optimaliseer het antwoord van a met behulp van de volgende formule:
 
- 
-Opdracht 1:
+> (maximaliseer) K = p*10000 - (T*20 + Min/10
 
-a) Een lijnvoering opstellen voor Noord- en Zuid-Holland met maximaal 7 trajecten waarbij alle kritieke verbindingen bereden moet worden.
+> p = fractie van hoeveel kritieke verbindingen bereden worden
 
-b) De lijnvoering optimaliseren met behulp van de doelfunctie (K zo hoog mogelijk) die als volgt is:
+> T = aantal treinen (trajecten)
 
-> De doelfunctie voor de kwaliteit van de lijnvoering geldt als volgt:
+> Min = tijdsduur van alle treinen samen in minuten
 
-K = p * 10000 - T * 20 - Min / 10    (waarbij K=kwaliteit, p = fractie gebruikte kritieke sporen, t = aantal treinen, Min = aantal minuten)
 
-De lowerbound wordt bereikt wanneer:
-- Geen enkel kritiek spoor bereden wordt (p = 0).
-- Het maximum aantal treinen wordt ingezet.
-- Het maximum aantal minuten (per traject) wordt bereikt.
+1c) Ga er nu vanuit dat alle verbindingen kritiek zijn. Hoe hoog kun je K maken?
 
-De upperbound wordt bereikt wanneer:
-- Ieder kritiek spoor bereden wordt (p = 1).
-- Zo min mogelijk treinen worden ingezet.
-- Zo min mogelijk minuten worden gebruikt.
+1d) Maak een lijnvoering voor heel Nederland met maximaal 20 trajecten waarbij alle trajecten binnen
+    180 minuten gereden moeten worden en alle kritieke verbinden moeten bereden worden. Met K zo hoog mogelijk.
+1e) Doe hetzelfde waarbij je alle verbindingen voor kritiek houd.
 
-c) Ga ervan uit dat alle sporen kritiek zijn in Noord- en Zuid-Holland. Hoe hoog kun je K maken?
+## State-space 
+Bij 1a/b/c is het aantal trajecten van zo lang mogelijke lengte en maximaal 120 minuten dat gemaakt kan worden 2737. Omdat er 7 trajecten gebruikt mogen worden is de statespace 7 boven 2737 = 2,265 * 10^20.  
 
- 
-### Lower- en upperbounds
-  
-**1a/b.** 
-> lowerbound:  
-p = 0    
-t = 7  
-Min = 7 * 120   
-K = 0 * 1000 - 7 * 20 - 7 * 120 / 10 = -224       
-        
-> upperbound:      
-p = 1      
-t = 287 / 120 omhoog afronden = 3        
-Min = 287       
-K = q * 1000 - 3 * 20 - 287 / 10 = 9911,3  
-       
-**1c.**  
-> lowerbound:  
-p = 0
-t = 7  
-Min = 7 * 120   
-K = 0 * 1000 - 7 * 20 - 7 * 120 / 10 = -224  
+Bij 1d/e is het aantal trajecten van zo lang mogelijke lengte en maximaal 180 minuten dat gemaakt kan worden, is 3761642. Omdat er 20 trajecten gebruikt mogen worden is de statespace 20 boven 3761642 = 1,253* 10^53.  
 
-> upperbound:      
-p = 1      
-t = 381 / 120 omhoog afronden = 4       
-Min = 381       
-K = q * 1000 - 4 * 20 - 381 / 10 = 9881,9  
+
+## Getting Started
+
+### Vereisten
+De code is geschreven in Python 3.6. 
+
+### Structuur
+Alle in Python geschreven code staat in het mapje code. 
+
+### Test
+Om de code te runnen gebruik de volgende instructie:
+
+> In RailNL_main.py voer de opdracht die je wilt uitvoeren in. Ook is er de mogelijkheid om te kiezen welke manier er wordt gebruikt bij zowel het opstellen als het uitbreiden van een traject, hierbij kunt u kiezen uit min, max en random. Run vervolgens het bestand zonder argumenten.
+
+
+## Auteurs
+Lisa Beek en Dorinda van den Dool
+
+## Dankwoord
+Minor Programmeren van de UvA.
+
+
+
+
 
