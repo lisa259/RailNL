@@ -21,6 +21,41 @@ De opdrachten zijn als volgt:
     180 minuten gereden moeten worden en alle kritieke verbinden moeten bereden worden. Met K zo hoog mogelijk.
 1e) Doe hetzelfde waarbij je alle verbindingen voor kritiek houd.
 
+## Lower- and Upperbound
+
+1b) Lowerbound:
+
+> We gaan ervan uit dat nul kritieke verbindingen worden bereden. Het maximaal aantal trajecten/treinen wordt ingezet. Dus 7. Deze rijden het maximaal aantal minuten dus 120. Dus kom je op een totaal tijd van 840. Wat betekend dat de waarde van de doelfunctie zo wordt: K = 0*10000 - (7*20 + 840/10) = -224.
+
+Upperbound:
+
+> We gaan ervan uit dat alle kritieke verbindingen bereden worden. De tijd van alle kritieke sporen bij elkaar is 287. Voor 287 minuten zijn minimaal 3 treinen nodig 287/120 > 2. Dus wordt de waarde van de doelfunctie: K = 1*10000 - (3*20 + 287/10) = 9911,3. 
+
+1c) Lowerbound:
+
+> K = 0*10000 - (0*20 + 0/10) = 0.
+
+Upperbound:
+
+> K = 1*10000 - (4*20 + 381/10) = 9881,9.
+
+1d) Lowerbound:
+
+> 
+
+Upperbound:
+
+>
+
+1e) Lowerbound:
+
+>
+
+Upperbound:
+
+>
+
+
 ## State-space 
 Bij 1a/b/c is het aantal trajecten dat gemaakt kan worden 2737. Deze trajecten zijn bepaald door vanuit ieder station alle langst mogelijke routes van maximaal 120 minuten op te stellen. Hierbij is het ,tijdens het opstellen van en traject, niet toegestaan om de laatst toegevoegde connectie nog eens toe te voegen. Ook zijn de trajecten die spiegelingen van elkaar zijn, uitgesloten. Omdat er 7 trajecten gebruikt mogen worden is de statespace 7 boven 2737 = 2,265 * 10^20.  
 
