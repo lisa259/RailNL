@@ -1,13 +1,8 @@
 import random
-from math import log
 from copy import deepcopy
 from functies.def_doelfunctie import doelfunctie
 
-<<<<<<< HEAD
-def simulated_annealing(list_with_trajects, list_with_stations, list_with_connections):
-=======
-def simulated_annealing(list_with_trajects, list_with_stations, list_with_connections, iteratie):
->>>>>>> 3a36def03616b9aae5d71590cd73f2e24a97d166
+def hill_climbing(list_with_trajects, list_with_stations, list_with_connections):
     #random 1 traject uit list_with_trajects kiezen    v 
     #random 2 plaatsen uit traject kiezen              v
     #check if connectie bestaat als omgedraaid         v
@@ -152,21 +147,8 @@ def simulated_annealing(list_with_trajects, list_with_stations, list_with_connec
                     if sorted([c.station1, c.station2]) in conn_nieuw:
                         c.used = True
                         
-                Tbegin = 1
-                Teind = 0.0001
-                N = 100
-                i = iteratie
-                Ti = Tbegin - i*(Tbegin - Teind)/N  #formule lineair
-                acceptatie = random.uniform(0, 1)
-                d = 1
-                c = 9889.0
-                
-                Ti = c /(log(i + d))
-                
-                #doelfunctie(list_with_connections, list_with_trajects) < doelfunctie(copy_connections, copy_list_with_trajects)
-                if acceptatie <= Ti:
+                if doelfunctie(list_with_connections, list_with_trajects) < doelfunctie(copy_connections, copy_list_with_trajects):
                     print("joe")
-                    print(doelfunctie(copy_connections, copy_list_with_trajects))
                     return [copy_list_with_trajects, copy_connections]
                 
     return False
