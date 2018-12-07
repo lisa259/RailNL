@@ -2,7 +2,7 @@ import random
 from copy import deepcopy
 from functies.def_doelfunctie import doelfunctie
 
-def hill_climbing(list_with_trajects, list_with_stations, list_with_connections):
+def simulated_annealing(list_with_trajects, list_with_stations, list_with_connections):
     #random 1 traject uit list_with_trajects kiezen    v 
     #random 2 plaatsen uit traject kiezen              v
     #check if connectie bestaat als omgedraaid         v

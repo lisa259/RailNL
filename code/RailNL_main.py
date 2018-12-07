@@ -13,7 +13,7 @@ from copy import deepcopy
 #exportfile = open('export.csv', 'a')
 
 
-OPDRACHT = "1e"                 # "1a", "1b", "1c", "1d", "1e"
+OPDRACHT = "1a"                 # "1a", "1b", "1c", "1d", "1e"
 TRAJECT_OPSTELLEN = "random"    # "min", "max", "random"
 TRAJECT_UITBREIDEN = "random"   # "min", "max", "random"
 
@@ -198,8 +198,6 @@ print(aantal_save)
 plotten(OPDRACHT, xen, yen, x_unused_save, y_unused_save)
 
 
-<<<<<<< HEAD
-
 for i in range(1):
 
     #resultaat = hill_climbing(list_with_trajects, list_with_stations, list_with_connections)
@@ -207,7 +205,7 @@ for i in range(1):
     if resultaat != False:
         list_with_trajects = deepcopy(resultaat)
         
-=======
+
 #for i in range(100):
 ##    resultaat = hill_climbing(list_with_trajects, list_with_stations, list_with_connections)
 ##    resultaat = simulated_annealing(list_with_trajects, list_with_stations, list_with_connections)
@@ -215,6 +213,6 @@ for i in range(1):
 #        list_with_trajects = deepcopy(resultaat[0])
 #        list_with_connections = deepcopy(resultaat[1])
 #        
->>>>>>> 0e8623d99e435f3147bed28ccd6f88b05d9114fb
+
 #exportfile.close() 
 print(doelfunctie(list_with_connections, list_with_trajects))
