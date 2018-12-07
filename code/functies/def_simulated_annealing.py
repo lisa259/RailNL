@@ -1,14 +1,16 @@
 import random
 from copy import deepcopy
-from def_doelfunctie import doelfunctie
+from functies.def_doelfunctie import doelfunctie
 
-def simulated_annealing(list_with_trajects, list_with_stations, list_with_connections):
-    
-    
-    # random traject kiezen
+def hill_climbing(list_with_trajects, list_with_stations, list_with_connections):
+    #random 1 traject uit list_with_trajects kiezen    v 
+    #random 2 plaatsen uit traject kiezen              v
+    #check if connectie bestaat als omgedraaid         v
+    #maak copy list_with_trajects                      v
+    #draai plaatsen om                                 v
+    #hogere doelwaarde? kopie als origineel nemen, anders door met origineel
     traject = random.choice(list_with_trajects)
-
-    
+#    print(traject.stations)
     if len(traject.stations) > 2:  
         station1 = random.choice(traject.stations)
         station2 = random.choice(traject.stations)
@@ -17,27 +19,23 @@ def simulated_annealing(list_with_trajects, list_with_stations, list_with_connec
         index1 = traject.stations.index(station1)
         index2 = traject.stations.index(station2)
         
-        # aantal buren die station 1 en 2 samen hebben
         check = 0
-        # aantal nieuwe connecties die gemaakt kunnen worden met de nieuwe buren als er geruil wordt
         nodig = 0
-        # variabele voor of een station aan de buitenkant zit of niet
-        wissel1 = "null"
-        wissel2 = "null"
         
-        oud1 = 0
-        nieuw1 = 0
-        oud2 = 0
-        nieuw2 = 0
-        
-        
+        conn_nieuw = []
+        conn_oud = []
         
         # onzin om met jezelf te ruilen
         if station1 != station2:
             # station2 niet aan buitenkanten traject, om te weten dat er 2 buren zijn
             if len(traject.stations)-1 > index2 > 0:
                 nodig += 2
-                wissel2 = "binnen"
+                
+                conn_oud.append(sorted([station2, traject.stations[index2-1]]))
+                conn_oud.append(sorted([station2, traject.stations[index2+1]]))
+                conn_nieuw.append(sorted([station1, traject.stations[index2-1]]))
+                conn_nieuw.append(sorted([station1, traject.stations[index2+1]]))
+                
                 # connecties station1 ophalen
                 for station in list_with_stations:
                     if station.name == station1:
@@ -48,10 +46,16 @@ def simulated_annealing(list_with_trajects, list_with_stations, list_with_connec
                             if traject.stations[index2 + 1] in [connection.station1, connection.station2] and traject.stations[index2 + 1] != station.name:
                                 check += 1
                                 
+                                
             # station1 niet aan buitenkanten traject, om te weten dat er 2 buren zijn
             if len(traject.stations)-1 > index1 > 0:
                 nodig += 2
-                wissel1 = "binnen"
+                
+                conn_oud.append(sorted([station1, traject.stations[index1-1]]))
+                conn_oud.append(sorted([station1, traject.stations[index1+1]]))
+                conn_nieuw.append(sorted([station2, traject.stations[index1-1]]))
+                conn_nieuw.append(sorted([station2, traject.stations[index1+1]]))
+                
                 # connecties station2 ophalen
                 for station in list_with_stations:
                     if station.name == station2:
@@ -62,10 +66,14 @@ def simulated_annealing(list_with_trajects, list_with_stations, list_with_connec
                             if traject.stations[index1 + 1] in [connection.station1, connection.station2] and traject.stations[index1 + 1] != station.name:
                                 check += 1
                                 
+            
             # station2 aan begin, station1 moet connectie hebben met [1]
             if index2 == 0:
                 nodig += 1
-                wissel2 = "begin"
+                
+                conn_oud.append(sorted([station2, traject.stations[index2+1]]))
+                conn_nieuw.append(sorted([station1, traject.stations[index2+1]]))
+                
                 # connecties station1 ophalen
                 for station in list_with_stations:
                     if station.name == station1:
@@ -74,10 +82,14 @@ def simulated_annealing(list_with_trajects, list_with_stations, list_with_connec
                             if traject.stations[1] in [connection.station1, connection.station2] and traject.stations[1] != station.name:
                                 check += 1
                                 
+            
             # station1 aan begin, station2 moet connectie hebben met [1]
             if index1 == 0:
                 nodig += 1
-                wissel1 = "begin"
+                
+                conn_oud.append(sorted([station1, traject.stations[index1+1]]))
+                conn_nieuw.append(sorted([station2, traject.stations[index1+1]]))
+                
                 # connecties station2 ophalen
                 for station in list_with_stations:
                     if station.name == station2:
@@ -86,10 +98,14 @@ def simulated_annealing(list_with_trajects, list_with_stations, list_with_connec
                             if traject.stations[1] in [connection.station1, connection.station2] and traject.stations[1] != station.name:
                                 check += 1
                                 
+                                
             # station2 aan eind, station1 moet connectie hebben met [-2]
             if index2 == len(traject.stations)-1:
                 nodig += 1
-                wissel2 = "eind"
+                
+                conn_oud.append(sorted([station2, traject.stations[index2-1]]))
+                conn_nieuw.append(sorted([station1, traject.stations[index2-1]]))
+                
                 # connecties station1 ophalen
                 for station in list_with_stations:
                     if station.name == station1:
@@ -101,7 +117,10 @@ def simulated_annealing(list_with_trajects, list_with_stations, list_with_connec
             # station1 aan eind, station2 moet connectie hebben met [-2]
             if index1 == len(traject.stations)-1:
                 nodig += 1
-                wissel1 = "eind"
+                
+                conn_oud.append(sorted([station1, traject.stations[index1-1]]))
+                conn_nieuw.append(sorted([station2, traject.stations[index1-1]]))
+                
                 # connecties station1 ophalen
                 for station in list_with_stations:
                     if station.name == station2:
@@ -109,142 +128,28 @@ def simulated_annealing(list_with_trajects, list_with_stations, list_with_connec
                             # buur van station1 in connecties?
                             if traject.stations[-2] in [connection.station1, connection.station2] and traject.stations[-2] != station.name:
                                 check += 1
-             
-                   
+          
             if nodig == check: 
-                copy_traject = deepcopy(traject)
+                print("ruilbaar")
                 
-                # oude connecties opslaan station 1
-                if wissel1 == "binnen" and (index1-index2 == 1 or index1-index2 == -1):
-                    if copy_traject.stations[index1 - 1] != station2:
-                        oud1 = [copy_traject.stations[index1 - 1]]
-                    else:
-                        oud1 = [copy_traject.stations[index1 + 1]]
-                elif wissel1 == "binnen" and (index1-index2 > 1 or index1-index2 < -1):
-                    oud1 = [copy_traject.stations[index1 - 1], copy_traject.stations[index1 + 1]]
-                elif wissel1 == "begin":
-                    oud1 = [copy_traject.stations[index1 + 1]]
-                elif wissel1 == "eind":
-                    oud1 = [copy_traject.stations[index1 - 1]]
-
-                # oude connecties opslaan station 2
-                if wissel2 == "binnen" and (index1-index2 == 1 or index1-index2 == -1):
-                    if copy_traject.stations[index2 - 1] != station1:
-                        oud2 = [copy_traject.stations[index2 - 1]]
-                    else:
-                        oud2 = [copy_traject.station[index2 + 1]]
-                elif wissel2 == "binnen" and (index1-index2 > 1 or index1-index2 < -1):
-                    oud2 = [copy_traject.stations[index2 - 1], copy_traject.stations[index2 + 1]]
-                elif wissel2 == "begin":
-                    oud2 = [copy_traject.stations[index2 + 1]]
-                elif wissel2 == "eind":
-                    oud2 = [copy_traject.stations[index2 - 1]]
-                
-                # verwisselen van stations
+                copy_traject = deepcopy(traject) 
                 copy_traject.stations[index1], copy_traject.stations[index2] = copy_traject.stations[index2], copy_traject.stations[index1]
-               
-                # nieuwe connecties opslaan station 1
-                if wissel2 == "binnen" and (index1-index2 > 1 or index1-index2 < -1):
-                    if copy_traject.stations[index2 - 1] != station2:
-                        nieuw1 = [copy_traject.stations[index2 - 1]]
-                    else:
-                        nieuw1 = [copy_traject.stations[index2 + 1]]
-                elif wissel2 == "binnen" and (index1-index2 > 1 or index1-index2 < -1):
-                    nieuw1 = [copy_traject.stations[index2 - 1], copy_traject.stations[index2 + 1]]        
-                elif wissel2 == "eind":
-                    nieuw1 = [copy_traject.stations[index2 - 1]]
-                elif wissel2 == "begin":
-                    nieuw1 = [copy_traject.stations[index2 + 1]]
-
-                # nieuwe connecties opslaan station 2
-                if wissel1 == "binnen" and (index1-index2 > 1 or index1-index2 < -1):
-                    if copy_traject.stations[index1 - 1] != station1:
-                        nieuw2 = [copy_traject.stations[index1 - 1]]
-                    else:
-                        nieuw2 = [copy_traject.stations[index1 + 1]]
-                elif wissel1 == "binnen" and (index1-index2 > 1 or index1-index2 < -1):
-                    nieuw2 = [copy_traject.stations[index1 - 1], copy_traject.stations[index1 + 1]]         
-                elif wissel1 == "eind":
-                    nieuw2 = [copy_traject.stations[index1 - 1]]
-                elif wissel1 == "begin":
-                    nieuw2 = [copy_traject.stations[index1 + 1]]
-
-#                 print(copy_traject.stations)
                 copy_list_with_trajects = deepcopy(list_with_trajects)
                 index_traject = list_with_trajects.index(traject)
                 copy_list_with_trajects[index_traject] = deepcopy(copy_traject)
-                ouddoel = doelfunctie(list_with_connections, list_with_trajects)
                 
-                
-                # zoekt nieuw en oud traject in list_with_connections
-                for connectie in list_with_connections:
-                    if len(oud1) == 1:
-                        if oud1[0] in connectie and station1 in connectie:
-                            connectie.used = False
-                    else:
-                        if oud1[0] in connectie and station1 in connectie:
-                            connectie.used = False
-                        if oud1[1] in connectie and station1 in connectie:
-                            connectie.used = False
-                    
-                    if len(oud2) == 1:
-                        if oud2[0] in connectie and station2 in connectie:
-                            connectie.used = False
-                    else:
-                        if oud2[0] in connectie and station2 in connectie:
-                            connectie.used = False
-                        if oud2[1] in connectie and station2 in connectie:
-                            connectie.used = False
-                      
-                    if len(nieuw1) == 1:
-                        if nieuw1[0] in connectie and station1 in connectie:
-                            connectie.used = True
-                    else:
-                        if nieuw1[0] in connectie and station1 in connectie:
-                            connectie.used =True
-                        if nieuw1[1] in connectie and station1 in connectie:
-                            connectie.used = True    
-                
-                    if len(nieuw2) == 1:
-                            if nieuw2[0] in connectie and station2 in connectie:
-                                connectie.used = True
-                    else:
-                        if nieuw2[0] in connectie and station2 in connectie:
-                            connectie.used = True
-                        if nieuw2[1] in connectie and station2 in connectie:
-                            connectie.used = True
-                
-                nieuwdoel = doelfunctie(list_with_connections, copy_list_with_trajects)
-                
-                print(ouddoel)
-                print(nieuwdoel)
-                
-                aannemen = random.uniform(0, 1)
-                print(aannemen)
-                
-                #Ti = T0(Tn/T0)**(i/N)
-                #N = aantal iteraties, i is iteratie nummer, T0 = begin temp, Tn = end temp en Ti is current temp
-                #Ti = c/(logi + d)
-                
-                
-                    #return copy_list_with_trajects
-                    # tabu list vullen met wat we weg nemen
-                    # in if vragen of toevoegende connecties in tabu list zitten
-                    # zo niet, dan accepteren
-                    # zo wel, dan niet accepteren, want dan doe je een stap terug
-                    # nieuwe meegeven
-                    
+                copy_connections = deepcopy(list_with_connections)
+                for c in copy_connections:
+                    # if oude connectie: 
+                    if sorted([c.station1, c.station2]) in conn_oud: 
+                        c.used = False
+                    # if nieuwe connectie:
+                    if sorted([c.station1, c.station2]) in conn_nieuw:
+                        c.used = True
+                        
+                if doelfunctie(list_with_connections, list_with_trajects) < doelfunctie(copy_connections, copy_list_with_trajects):
+                    print("joe")
+                    return [copy_list_with_trajects, copy_connections]
                 
     return False
-            
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
+        

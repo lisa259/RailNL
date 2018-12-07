@@ -13,12 +13,12 @@ from copy import deepcopy
 #exportfile = open('export.csv', 'a')
 
 
-OPDRACHT = "1a"                 # "1a", "1b", "1c", "1d", "1e"
+OPDRACHT = "1e"                 # "1a", "1b", "1c", "1d", "1e"
 TRAJECT_OPSTELLEN = "random"    # "min", "max", "random"
 TRAJECT_UITBREIDEN = "random"   # "min", "max", "random"
 
 if TRAJECT_OPSTELLEN == "random" or TRAJECT_UITBREIDEN == "random":
-    aantalLoops = 5000
+    aantalLoops = 500
 else:
     aantalLoops = 1
 
@@ -33,9 +33,9 @@ elif OPDRACHT == "1b" or OPDRACHT == "1c":
     MIN_MINUTEN = 100
     MAX_MINUTEN = 120
 elif OPDRACHT == "1d":
-    MIN_TREINEN = 9
-    MAX_TREINEN = 9
-    MIN_MINUTEN = 180
+    MIN_TREINEN = 8
+    MAX_TREINEN = 10
+    MIN_MINUTEN = 160
     MAX_MINUTEN = 180
 elif OPDRACHT == "1e":
     MIN_TREINEN = 8
@@ -134,12 +134,12 @@ for treinen in range(MIN_TREINEN, MAX_TREINEN + 1):
                     x = []
                     y = []
                     for s in list_with_stations:
-                        if s.name == i.station1:
+                        if s.name in [i.station1, i.station2]:
                             x.append(float(s.x))
                             y.append(float(s.y))
-                        elif s.name == i.station2:
-                            x.append(float(s.x))
-                            y.append(float(s.y))
+#                        elif s.name == i.station2:
+#                            x.append(float(s.x))
+#                            y.append(float(s.y))
                     x_unused.append(x)
                     y_unused.append(y)
 #                    exportfile.write(i.station1 + "  -  " + i.station2 + "\n")
@@ -198,12 +198,12 @@ print(aantal_save)
 plotten(OPDRACHT, xen, yen, x_unused_save, y_unused_save)
 
 
-for i in range(100):
-    resultaat = hill_climbing(list_with_trajects, list_with_stations, list_with_connections)
-#    resultaat = simulated_annealing(list_with_trajects, list_with_stations, list_with_connections)
-    if resultaat != False:
-        list_with_trajects = deepcopy(resultaat[0])
-        list_with_connections = deepcopy(resultaat[1])
-        
+#for i in range(100):
+##    resultaat = hill_climbing(list_with_trajects, list_with_stations, list_with_connections)
+##    resultaat = simulated_annealing(list_with_trajects, list_with_stations, list_with_connections)
+#    if resultaat != False:
+#        list_with_trajects = deepcopy(resultaat[0])
+#        list_with_connections = deepcopy(resultaat[1])
+#        
 #exportfile.close() 
 print(doelfunctie(list_with_connections, list_with_trajects))
