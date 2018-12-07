@@ -1,21 +1,13 @@
 import random
 from copy import deepcopy
-from functies.def_doelfunctie import doelfunctie
+from def_doelfunctie import doelfunctie
 
 def simulated_annealing(list_with_trajects, list_with_stations, list_with_connections):
     
     
-    # lengte tabu, kan veranderen naar wat je wil !!!!!!!!!!!!!!!!!!!!!!!1
-    lengte = 3
-    # tabu list
-    tabu = []
     # random traject kiezen
     traject = random.choice(list_with_trajects)
-    # boolean for in tabu
-    controle = False
-    #
-    vergelijking1 = 0
-    vergelijking2 = 0
+
     
     if len(traject.stations) > 2:  
         station1 = random.choice(traject.stations)
@@ -123,82 +115,119 @@ def simulated_annealing(list_with_trajects, list_with_stations, list_with_connec
                 copy_traject = deepcopy(traject)
                 
                 # oude connecties opslaan station 1
-                if wissel1 == "binnen":
+                if wissel1 == "binnen" and (index1-index2 == 1 or index1-index2 == -1):
                     if copy_traject.stations[index1 - 1] != station2:
-                        oud1 = copy_traject.stations[index1 - 1]
+                        oud1 = [copy_traject.stations[index1 - 1]]
                     else:
-                        oud1 = copy_traject.stations[index1 + 1]
+                        oud1 = [copy_traject.stations[index1 + 1]]
+                elif wissel1 == "binnen" and (index1-index2 > 1 or index1-index2 < -1):
+                    oud1 = [copy_traject.stations[index1 - 1], copy_traject.stations[index1 + 1]]
                 elif wissel1 == "begin":
-                    oud1 = copy_traject.stations[index1 + 1]
+                    oud1 = [copy_traject.stations[index1 + 1]]
                 elif wissel1 == "eind":
-                    oud1 = copy_traject.stations[index1 - 1]
-                tabu1 = [station1, oud1]
-                if len(tabu) <= (lengte * 2):
-                    tabu.append(tabu1)
-                else:
-                    tabu.remove((lengte * 2) - 1)
-                    tabu = [tabu1] + tabu
-                
+                    oud1 = [copy_traject.stations[index1 - 1]]
+
                 # oude connecties opslaan station 2
-                if wissel2 == "binnen":
+                if wissel2 == "binnen" and (index1-index2 == 1 or index1-index2 == -1):
                     if copy_traject.stations[index2 - 1] != station1:
-                        oud2 = copy_traject.stations[index2 - 1]
+                        oud2 = [copy_traject.stations[index2 - 1]]
                     else:
-                        oud2 = copy_traject.station[index2 + 1]
+                        oud2 = [copy_traject.station[index2 + 1]]
+                elif wissel2 == "binnen" and (index1-index2 > 1 or index1-index2 < -1):
+                    oud2 = [copy_traject.stations[index2 - 1], copy_traject.stations[index2 + 1]]
                 elif wissel2 == "begin":
-                    oud2 = copy_traject.stations[index2 + 1]
+                    oud2 = [copy_traject.stations[index2 + 1]]
                 elif wissel2 == "eind":
-                    oud2 = copy_traject.stations[index2 - 1]
-                tabu2 = [station2, oud2]
-                if len(tabu) <= (lengte * 2):
-                    tabu.append(tabu2)
-                else:
-                    tabu.remove((lengte * 2) - 1)
-                    tabu = [tabu2] + tabu
+                    oud2 = [copy_traject.stations[index2 - 1]]
                 
                 # verwisselen van stations
                 copy_traject.stations[index1], copy_traject.stations[index2] = copy_traject.stations[index2], copy_traject.stations[index1]
                
                 # nieuwe connecties opslaan station 1
-                if wissel2 == "binnen":
+                if wissel2 == "binnen" and (index1-index2 > 1 or index1-index2 < -1):
                     if copy_traject.stations[index2 - 1] != station2:
-                        nieuw1 = copy_traject.stations[index2 - 1]
+                        nieuw1 = [copy_traject.stations[index2 - 1]]
                     else:
-                        nieuw1 = copy_traject.stations[index2 + 1]
+                        nieuw1 = [copy_traject.stations[index2 + 1]]
+                elif wissel2 == "binnen" and (index1-index2 > 1 or index1-index2 < -1):
+                    nieuw1 = [copy_traject.stations[index2 - 1], copy_traject.stations[index2 + 1]]        
                 elif wissel2 == "eind":
-                    nieuw1 = copy_traject.stations[index2 - 1]
+                    nieuw1 = [copy_traject.stations[index2 - 1]]
                 elif wissel2 == "begin":
-                    nieuw1 = copy_traject.stations[index2 + 1]
-                vergelijking1 = [station1, nieuw1]
-                    
-                # nieuwe connecties opslaan station 2
-                if wissel1 == "binnen":
-                    if copy_traject.stations[index1 - 1] != station1:
-                        nieuw2 = copy_traject.stations[index1 - 1]
-                    else:
-                        nieuw2 = copy_traject.stations[index1 + 1]
-                elif wissel1 == "eind":
-                    nieuw2 = copy_traject.stations[index1 - 1]
-                elif wissel1 == "begin":
-                    nieuw2 = copy_traject.stations[index1 + 1]
-                vergelijking2 = [station2, nieuw2]
+                    nieuw1 = [copy_traject.stations[index2 + 1]]
 
-                if len(tabu) >= 1:
-                    for part in tabu:
-                        if vergelijking1[0] in part and vergelijking1[1] in part and vergelijking2[0] in part and vergelijking2[1] in part:
-                            controle = True
-                        
+                # nieuwe connecties opslaan station 2
+                if wissel1 == "binnen" and (index1-index2 > 1 or index1-index2 < -1):
+                    if copy_traject.stations[index1 - 1] != station1:
+                        nieuw2 = [copy_traject.stations[index1 - 1]]
+                    else:
+                        nieuw2 = [copy_traject.stations[index1 + 1]]
+                elif wissel1 == "binnen" and (index1-index2 > 1 or index1-index2 < -1):
+                    nieuw2 = [copy_traject.stations[index1 - 1], copy_traject.stations[index1 + 1]]         
+                elif wissel1 == "eind":
+                    nieuw2 = [copy_traject.stations[index1 - 1]]
+                elif wissel1 == "begin":
+                    nieuw2 = [copy_traject.stations[index1 + 1]]
 
 #                 print(copy_traject.stations)
                 copy_list_with_trajects = deepcopy(list_with_trajects)
                 index_traject = list_with_trajects.index(traject)
                 copy_list_with_trajects[index_traject] = deepcopy(copy_traject)
-                if doelfunctie(list_with_connections, list_with_trajects) < doelfunctie(list_with_connections, copy_list_with_trajects) and controle == False:
-                    print("joe")
-                    return copy_list_with_trajects
-                else:
-                    print("verslechtering")
-                    return copy_list_with_trajects
+                ouddoel = doelfunctie(list_with_connections, list_with_trajects)
+                
+                
+                # zoekt nieuw en oud traject in list_with_connections
+                for connectie in list_with_connections:
+                    if len(oud1) == 1:
+                        if oud1[0] in connectie and station1 in connectie:
+                            connectie.used = False
+                    else:
+                        if oud1[0] in connectie and station1 in connectie:
+                            connectie.used = False
+                        if oud1[1] in connectie and station1 in connectie:
+                            connectie.used = False
+                    
+                    if len(oud2) == 1:
+                        if oud2[0] in connectie and station2 in connectie:
+                            connectie.used = False
+                    else:
+                        if oud2[0] in connectie and station2 in connectie:
+                            connectie.used = False
+                        if oud2[1] in connectie and station2 in connectie:
+                            connectie.used = False
+                      
+                    if len(nieuw1) == 1:
+                        if nieuw1[0] in connectie and station1 in connectie:
+                            connectie.used = True
+                    else:
+                        if nieuw1[0] in connectie and station1 in connectie:
+                            connectie.used =True
+                        if nieuw1[1] in connectie and station1 in connectie:
+                            connectie.used = True    
+                
+                    if len(nieuw2) == 1:
+                            if nieuw2[0] in connectie and station2 in connectie:
+                                connectie.used = True
+                    else:
+                        if nieuw2[0] in connectie and station2 in connectie:
+                            connectie.used = True
+                        if nieuw2[1] in connectie and station2 in connectie:
+                            connectie.used = True
+                
+                nieuwdoel = doelfunctie(list_with_connections, copy_list_with_trajects)
+                
+                print(ouddoel)
+                print(nieuwdoel)
+                
+                aannemen = random.uniform(0, 1)
+                print(aannemen)
+                
+                #Ti = T0(Tn/T0)**(i/N)
+                #N = aantal iteraties, i is iteratie nummer, T0 = begin temp, Tn = end temp en Ti is current temp
+                #Ti = c/(logi + d)
+                
+                
+                    #return copy_list_with_trajects
                     # tabu list vullen met wat we weg nemen
                     # in if vragen of toevoegende connecties in tabu list zitten
                     # zo niet, dan accepteren

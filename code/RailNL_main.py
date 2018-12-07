@@ -198,11 +198,10 @@ print(aantal_save)
 
 plotten(OPDRACHT, xen, yen, x_unused_save, y_unused_save)
 
-<<<<<<< HEAD
-for i in range(1000):
-=======
-for i in range(100):
->>>>>>> eeb582fad8e41c2c77496e67c4916b65a865e3ac
+
+
+for i in range(1):
+
     #resultaat = hill_climbing(list_with_trajects, list_with_stations, list_with_connections)
     resultaat = simulated_annealing(list_with_trajects, list_with_stations, list_with_connections)
     if resultaat != False:

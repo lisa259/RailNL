@@ -217,6 +217,9 @@ for treinen in range(MIN_TREINEN, MAX_TREINEN + 1):
     #resultaat = simulated_annealing(list_with_trajects, list_with_stations, list_with_connections)
     #if resultaat != False:
         #list_with_trajects = deepcopy(resultaat
+       
+        
+        
 for i in range(len(listdoel)):
     exportfile.write(str(listdoel[i]) + "-" + str(aantaldoel[i]))
     exportfile.write("\n")
