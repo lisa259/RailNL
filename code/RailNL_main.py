@@ -13,12 +13,12 @@ from copy import deepcopy
 #exportfile = open('export.csv', 'a')
 
 
-OPDRACHT = "1e"                 # "1a", "1b", "1c", "1d", "1e"
+OPDRACHT = "1d"                 # "1a", "1b", "1c", "1d", "1e"
 TRAJECT_OPSTELLEN = "random"    # "min", "max", "random"
 TRAJECT_UITBREIDEN = "random"   # "min", "max", "random"
 
 if TRAJECT_OPSTELLEN == "random" or TRAJECT_UITBREIDEN == "random":
-    aantalLoops = 500
+    aantalLoops = 100
 else:
     aantalLoops = 1
 
@@ -29,18 +29,18 @@ if OPDRACHT == "1a":
     MAX_MINUTEN = 120
 elif OPDRACHT == "1b" or OPDRACHT == "1c":
     MIN_TREINEN = 4
-    MAX_TREINEN = 5
-    MIN_MINUTEN = 100
+    MAX_TREINEN = 4
+    MIN_MINUTEN = 120
     MAX_MINUTEN = 120
 elif OPDRACHT == "1d":
-    MIN_TREINEN = 8
-    MAX_TREINEN = 10
-    MIN_MINUTEN = 160
+    MIN_TREINEN = 9
+    MAX_TREINEN = 9
+    MIN_MINUTEN = 180
     MAX_MINUTEN = 180
 elif OPDRACHT == "1e":
-    MIN_TREINEN = 8
-    MAX_TREINEN = 10   
-    MIN_MINUTEN = 160
+    MIN_TREINEN = 12
+    MAX_TREINEN = 12   
+    MIN_MINUTEN = 180
     MAX_MINUTEN = 180
 
 bestanden = importeren(OPDRACHT)
@@ -198,23 +198,22 @@ print(aantal_save)
 plotten(OPDRACHT, xen, yen, x_unused_save, y_unused_save)
 
 
-<<<<<<< HEAD
 
-for i in range(1):
+#for i in range(100):
 
     #resultaat = hill_climbing(list_with_trajects, list_with_stations, list_with_connections)
-    resultaat = simulated_annealing(list_with_trajects, list_with_stations, list_with_connections)
-    if resultaat != False:
-        list_with_trajects = deepcopy(resultaat)
+    #resultaat = simulated_annealing(list_with_trajects, list_with_stations, list_with_connections, i)
+    #if resultaat != False:
+        #list_with_trajects = deepcopy(resultaat)
         
-=======
-#for i in range(100):
-##    resultaat = hill_climbing(list_with_trajects, list_with_stations, list_with_connections)
-##    resultaat = simulated_annealing(list_with_trajects, list_with_stations, list_with_connections)
-#    if resultaat != False:
-#        list_with_trajects = deepcopy(resultaat[0])
-#        list_with_connections = deepcopy(resultaat[1])
-#        
->>>>>>> 0e8623d99e435f3147bed28ccd6f88b05d9114fb
+
+for i in range(100):
+    #resultaat = hill_climbing(list_with_trajects, list_with_stations, list_with_connections)
+    resultaat = simulated_annealing(list_with_trajects, list_with_stations, list_with_connections, i)
+    if resultaat != False:
+        list_with_trajects = deepcopy(resultaat[0])
+        list_with_connections = deepcopy(resultaat[1])
+        
+
 #exportfile.close() 
 print(doelfunctie(list_with_connections, list_with_trajects))
