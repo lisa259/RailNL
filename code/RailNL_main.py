@@ -10,12 +10,10 @@ from functies.def_hill_climbing import hill_climbing
 from functies.def_simulated_annealing import simulated_annealing
 from copy import deepcopy
 
-print("import")
-
 #exportfile = open('export.csv', 'a')
 
 
-OPDRACHT = "1a"                 # "1a", "1b", "1c", "1d", "1e"
+OPDRACHT = "1e"                 # "1a", "1b", "1c", "1d", "1e"
 TRAJECT_OPSTELLEN = "random"    # "min", "max", "random"
 TRAJECT_UITBREIDEN = "random"   # "min", "max", "random"
 
@@ -31,18 +29,18 @@ if OPDRACHT == "1a":
     MAX_MINUTEN = 120
 elif OPDRACHT == "1b" or OPDRACHT == "1c":
     MIN_TREINEN = 4
-    MAX_TREINEN = 4
-    MIN_MINUTEN = 120
+    MAX_TREINEN = 5
+    MIN_MINUTEN = 100
     MAX_MINUTEN = 120
 elif OPDRACHT == "1d":
-    MIN_TREINEN = 9
-    MAX_TREINEN = 9
-    MIN_MINUTEN = 180
+    MIN_TREINEN = 8
+    MAX_TREINEN = 10
+    MIN_MINUTEN = 160
     MAX_MINUTEN = 180
 elif OPDRACHT == "1e":
-    MIN_TREINEN = 12
-    MAX_TREINEN = 12    
-    MIN_MINUTEN = 180
+    MIN_TREINEN = 8
+    MAX_TREINEN = 10   
+    MIN_MINUTEN = 160
     MAX_MINUTEN = 180
 
 bestanden = importeren(OPDRACHT)
@@ -74,6 +72,7 @@ for station in all_stations:
 maximum_doelwaarde = 0
 
 for treinen in range(MIN_TREINEN, MAX_TREINEN + 1):
+    print(treinen)
     for minuutjes in range(MIN_MINUTEN, MAX_MINUTEN + 1):
         
         " RESTRICTIES LIJNVOERING "
@@ -135,12 +134,12 @@ for treinen in range(MIN_TREINEN, MAX_TREINEN + 1):
                     x = []
                     y = []
                     for s in list_with_stations:
-                        if s.name == i.station1:
+                        if s.name in [i.station1, i.station2]:
                             x.append(float(s.x))
                             y.append(float(s.y))
-                        elif s.name == i.station2:
-                            x.append(float(s.x))
-                            y.append(float(s.y))
+#                        elif s.name == i.station2:
+#                            x.append(float(s.x))
+#                            y.append(float(s.y))
                     x_unused.append(x)
                     y_unused.append(y)
 #                    exportfile.write(i.station1 + "  -  " + i.station2 + "\n")
@@ -198,15 +197,13 @@ print(aantal_save)
 
 plotten(OPDRACHT, xen, yen, x_unused_save, y_unused_save)
 
-<<<<<<< HEAD
-for i in range(1000):
-=======
-for i in range(100):
->>>>>>> eeb582fad8e41c2c77496e67c4916b65a865e3ac
-    #resultaat = hill_climbing(list_with_trajects, list_with_stations, list_with_connections)
-    resultaat = simulated_annealing(list_with_trajects, list_with_stations, list_with_connections)
-    if resultaat != False:
-        list_with_trajects = deepcopy(resultaat)
-        
+
+#for i in range(100):
+##    resultaat = hill_climbing(list_with_trajects, list_with_stations, list_with_connections)
+##    resultaat = simulated_annealing(list_with_trajects, list_with_stations, list_with_connections)
+#    if resultaat != False:
+#        list_with_trajects = deepcopy(resultaat[0])
+#        list_with_connections = deepcopy(resultaat[1])
+#        
 #exportfile.close() 
 print(doelfunctie(list_with_connections, list_with_trajects))
