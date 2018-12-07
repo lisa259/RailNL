@@ -3,11 +3,7 @@ from math import log
 from copy import deepcopy
 from functies.def_doelfunctie import doelfunctie
 
-<<<<<<< HEAD
-def simulated_annealing(list_with_trajects, list_with_stations, list_with_connections):
-=======
 def simulated_annealing(list_with_trajects, list_with_stations, list_with_connections, iteratie):
->>>>>>> 3a36def03616b9aae5d71590cd73f2e24a97d166
     #random 1 traject uit list_with_trajects kiezen    v 
     #random 2 plaatsen uit traject kiezen              v
     #check if connectie bestaat als omgedraaid         v
