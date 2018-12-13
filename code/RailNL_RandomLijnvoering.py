@@ -7,7 +7,7 @@ import random
 
 exportfile = open('export_statespace_random.csv', 'a') 
 
-OPDRACHT = "1d"
+OPDRACHT = "1a"
 
 bestanden = importeren(OPDRACHT)
 all_connections = bestanden[0]

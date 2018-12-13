@@ -1,19 +1,22 @@
 from classes.class_STATION import STATION
 from classes.class_CONNECTION import CONNECTION
+from classes.class_TRAJECT import TRAJECT
 from functies.def_new_traject import new_traject
 from functies.def_importeren import importeren
 from functies.def_linken import linken
 from functies.def_doelfunctie import doelfunctie
 from functies.def_plotten import plotten
+from StateSpace import statespace
 from functies.def_hill_climbing import hill_climbing
 from functies.def_simulated_annealing import simulated_annealing
 from copy import deepcopy
+import random
 
-print("import")
 
-exportfile = open('grafiek1e.csv', 'a')
+exportfile = open('vergelijkingsgrafiek1e.csv', 'a')
 listdoel = []
-aantaldoel = []
+aantalalgdoel = []
+aantalrandomdoel = []
 
 OPDRACHT = "1e"                 # "1a", "1b", "1c", "1d", "1e"
 TRAJECT_OPSTELLEN = "random"    # "min", "max", "random"
@@ -81,9 +84,6 @@ for treinen in range(MIN_TREINEN, MAX_TREINEN + 1):
         MAX_AANTAL_MINUTEN = minuutjes
         
         for AantalKeerLoopen in range(aantalLoops):
-#            exportfile.write("-----------------------------------  NIEUW  -----------------------------\n")
-#            exportfile.write(str(MAX_AANTAL_TREINEN) + "   " + str(MAX_AANTAL_MINUTEN) + "\n")
-#            exportfile.write("\n")
             
             for conn in list_with_connections:
                 conn.used = False
@@ -105,16 +105,7 @@ for treinen in range(MIN_TREINEN, MAX_TREINEN + 1):
                 while True: 
                     if not traject.new_connection(list_with_connections, MAX_AANTAL_MINUTEN, TRAJECT_UITBREIDEN):
                         break
-            
-            " per traject telkens maar 1 connectie toevoegen "
-#            grens = [True] * len(list_with_trajects)
-#            
-#            while True in grens:
-#                for i in range(0, len(list_with_trajects)):
-#                    if grens[i] == True:
-#                        if not list_with_trajects[i].new_connection(list_with_connections, MAX_AANTAL_MINUTEN, TRAJECT_UITBREIDEN):
-#                            grens[i] = False
-                 
+                         
                     
             " TRY TO ADD UNUSED CRITIC CONNECTIONS TO EXISTING TRAJECTS "
             for i in list_with_connections:   
@@ -122,9 +113,8 @@ for treinen in range(MIN_TREINEN, MAX_TREINEN + 1):
                     if linken([i.station1, i.station2], i.duration, list_with_trajects, list_with_stations, MAX_AANTAL_MINUTEN, doelfunctie(list_with_connections, list_with_trajects), list_with_connections, list_with_connections.index(i)):
                         i.setUsed(True)
             
-            
-            
-#            exportfile.write("\n")
+          
+
             " PRINT UNUSED CONNECTIONS " 
             aantal = 0
             x_unused = []
@@ -143,85 +133,92 @@ for treinen in range(MIN_TREINEN, MAX_TREINEN + 1):
                             y.append(float(s.y))
                     x_unused.append(x)
                     y_unused.append(y)
-#                    exportfile.write(i.station1 + "  -  " + i.station2 + "\n")
-                   
-            
-#            exportfile.write("\n")
-#            for traject in list_with_trajects:
-#                exportfile.write(str(traject.stations) + "    " + str(traject.total_time) + "\n")
-                
-#            exportfile.write("\n")
-#            exportfile.write("Doelwaarde: \n")
-#            exportfile.write(str(doelfunctie(list_with_connections, list_with_trajects)) + "\n")
-#            exportfile.write(str(aantal) + "\n")
-#            exportfile.write("\n")
 
-            
+
             gevonden = False
             doel = doelfunctie(list_with_connections, list_with_trajects)
             
             #if len(listdoel) > 0:
             for i in range(len(listdoel)):
                 if doel == listdoel[i]:
-                    aantaldoel[i] = aantaldoel[i] + 1
+                    aantalalgdoel[i] = aantalalgdoel[i] + 1
                     gevonden = True
             if gevonden == False:
-                aantaldoel.append(1)
+                aantalalgdoel.append(1)
+                aantalrandomdoel.append(0)
                 listdoel.append(doel)
             
             print(AantalKeerLoopen)
-            
-            #if doel >= maximum_doelwaarde:
-                #maximum_doelwaarde = doel
-                #treinen_save = treinen
-                #minuten_save = minuutjes
-                #aantal_save = aantal
-                #trajecten_save = deepcopy(list_with_trajects)
-                #connecties_save = deepcopy(list_with_connections)
-                #x_unused_save = x_unused
-                #y_unused_save = y_unused
+                  
+
+# random trajecten opstellen
 
 
-#list_with_trajects = deepcopy(trajecten_save)
-#list_with_connections = deepcopy(connecties_save)
+OPDRACHT = "1e"
 
-#xen = []
-#yen = []
-" PRINT & PLOT BEST FINAL TRAJECTS "                   
-#print("___________TRAJECTEN:___________")
-#for traject in list_with_trajects:
-    #print(traject.stations)
-    #print(traject.total_time)
-    #print("")
-#    x = []
-#    y = []
-#   for station in traject.stations:
-#        for stat in list_with_stations:
-#            if stat.name == station:
-#                x.append(float(stat.x))
-#               y.append(float(stat.y))
-#    xen.append(x)
-#    yen.append(y)
+print("random")
 
+bestanden = importeren(OPDRACHT)
+all_connections = bestanden[0]
+all_stations = bestanden[1]
 
-#print(OPDRACHT)    
-#print(treinen_save)
-#print(minuten_save)
-#print(maximum_doelwaarde)     
-#print(aantal_save)
+list_with_connections = []
+for connection in all_connections:
+    list_with_connections.append(CONNECTION(connection[0], connection[1], float(connection[2])))
 
-#plotten(OPDRACHT, xen, yen, x_unused_save, y_unused_save)
-
-#for i in range(100):
-    #resultaat = hill_climbing(list_with_trajects, list_with_stations, list_with_connections)
-    #resultaat = simulated_annealing(list_with_trajects, list_with_stations, list_with_connections)
-    #if resultaat != False:
-        #list_with_trajects = deepcopy(resultaat
-       
+for station in all_stations:
+    if station[-1] == "Kritiek" or OPDRACHT in ["1c", "1e"]:
+        boolean = True
+    else:
+        boolean = False
         
+    for conn in list_with_connections:
+        if station[0] in [conn.station1, conn.station2]:
+            if boolean:
+                conn.setCritic(boolean)
+
+
+
+statespace = statespace()
+statespace_lijst = statespace[0]
+statespace_afstanden = statespace[1]
+
+for loop in range(10000):
+    print(loop)
+    for c in list_with_connections:
+        c.setUsed(False)
         
+    list_with_trajects = []
+    
+    for i in range(12):
+        index = random.randint(0, len(statespace_lijst) - 1)
+        new = TRAJECT()
+        new.stations = statespace_lijst[index][:]
+        new.total_time = statespace_afstanden[index]
+        list_with_trajects.append(new)
+    
+    for t in list_with_trajects:
+        for s in range(len(t.stations)-1):
+            for c in list_with_connections:
+                if sorted([t.stations[s], t.stations[s+1]]) == sorted([c.station1, c.station2]):
+                    c.setUsed(True)
+                  
+    doel = doelfunctie(list_with_connections, list_with_trajects)
+    
+    if doel in listdoel:
+        index_doel = listdoel.index(doel)
+        aantalrandomdoel[index_doel] = aantalrandomdoel[index_doel] + 1
+    else:
+        listdoel.append(doel)
+        aantalrandomdoel.append(1)
+        aantalalgdoel.append(0)
+    
+
+
+
+# printen in exportfile
+
 for i in range(len(listdoel)):
-    exportfile.write(str(listdoel[i]) + "-" + str(aantaldoel[i]))
+    exportfile.write(str(listdoel[i]) + "-" + str(aantalalgdoel[i]) + "-" + str(aantalrandomdoel[i]))
     exportfile.write("\n")
 exportfile.close() 
-#print(doelfunctie(list_with_connections, list_with_trajects))
