@@ -13,8 +13,16 @@ from copy import deepcopy
 #exportfile = open('export.csv', 'a')
 
 
+<<<<<<< HEAD
 OPDRACHT = "1a"                 # "1a", "1b", "1c", "1d", "1e"
+=======
+<<<<<<< HEAD
+OPDRACHT = "1a"                 # "1a", "1b", "1c", "1d", "1e"
+=======
+OPDRACHT = "1d"                 # "1a", "1b", "1c", "1d", "1e"
+>>>>>>> c7bd2ff1524a458af62ac935d2981e1bd12a3598
 
+>>>>>>> 4471a5618f8c220ceecba9f865ba46594aed05ad
 TRAJECT_OPSTELLEN = "random"    # "min", "max", "random"
 TRAJECT_UITBREIDEN = "random"   # "min", "max", "random"
 
@@ -24,8 +32,8 @@ else:
     aantalLoops = 1
 
 if OPDRACHT == "1a":
-    MIN_TREINEN = 4
-    MAX_TREINEN = 4
+    MIN_TREINEN = 3
+    MAX_TREINEN = 3
     MIN_MINUTEN = 120
     MAX_MINUTEN = 120
 elif OPDRACHT == "1b" or OPDRACHT == "1c":
@@ -213,6 +221,27 @@ plotten(OPDRACHT, xen, yen, x_unused_save, y_unused_save)
 #>>>>>>> 3a36def03616b9aae5d71590cd73f2e24a97d166
 #
 #for i in range(100):
+<<<<<<< HEAD
+
+    #resultaat = hill_climbing(list_with_trajects, list_with_stations, list_with_connections)
+    #resultaat = simulated_annealing(list_with_trajects, list_with_stations, list_with_connections, i)
+    #if resultaat != False:
+        #list_with_trajects = deepcopy(resultaat)
+        
+
+for i in range(1000):
+    #resultaat = hill_climbing(list_with_trajects, list_with_stations, list_with_connections)
+    resultaat = simulated_annealing(list_with_trajects, list_with_stations, list_with_connections, i)
+    if resultaat != False:
+        print(resultaat)
+        list_with_trajects = deepcopy(resultaat[0])
+        list_with_connections = deepcopy(resultaat[1])
+        print(doelfunctie(list_with_connections, list_with_trajects))
+        
+
+#exportfile.close() 
+#print(doelfunctie(list_with_connections, list_with_trajects))
+=======
 #    #resultaat = hill_climbing(list_with_trajects, list_with_stations, list_with_connections)
 #    resultaat = simulated_annealing(list_with_trajects, list_with_stations, list_with_connections, i)
 #    if resultaat != False:
@@ -233,3 +262,4 @@ plotten(OPDRACHT, xen, yen, x_unused_save, y_unused_save)
 #>>>>>>> 3a36def03616b9aae5d71590cd73f2e24a97d166
 ##exportfile.close() 
 print(doelfunctie(list_with_connections, list_with_trajects))
+>>>>>>> 4471a5618f8c220ceecba9f865ba46594aed05ad

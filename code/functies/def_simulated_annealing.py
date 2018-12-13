@@ -149,16 +149,17 @@ def simulated_annealing(list_with_trajects, list_with_stations, list_with_connec
                         c.used = True
                         
                 Tbegin = 1
-                Teind = 0.0001
+                Teind = 0.1
                 N = 100
                 i = iteratie
-                Ti = Tbegin - i*(Tbegin - Teind)/N  #formule lineair
+                #Ti = Tbegin - i*(Tbegin - Teind)/N  #formule lineair
                 acceptatie = random.uniform(0, 1)
-                d = 1
-                c = 9889.0
-                
+                d = 2
+                c = 4
+                print(acceptatie)
                 Ti = c /(log(i + d))
-                
+                print("dit is ti")
+                print(Ti)
                 #doelfunctie(list_with_connections, list_with_trajects) < doelfunctie(copy_connections, copy_list_with_trajects)
                 if acceptatie <= Ti:
                     print("joe")
