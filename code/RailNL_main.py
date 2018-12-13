@@ -13,7 +13,7 @@ from copy import deepcopy
 #exportfile = open('export.csv', 'a')
 
 
-OPDRACHT = "1d"                 # "1a", "1b", "1c", "1d", "1e"
+OPDRACHT = "1a"                 # "1a", "1b", "1c", "1d", "1e"
 
 TRAJECT_OPSTELLEN = "random"    # "min", "max", "random"
 TRAJECT_UITBREIDEN = "random"   # "min", "max", "random"
