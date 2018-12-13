@@ -16,7 +16,11 @@ from copy import deepcopy
 <<<<<<< HEAD
 OPDRACHT = "1a"                 # "1a", "1b", "1c", "1d", "1e"
 =======
+<<<<<<< HEAD
+OPDRACHT = "1a"                 # "1a", "1b", "1c", "1d", "1e"
+=======
 OPDRACHT = "1d"                 # "1a", "1b", "1c", "1d", "1e"
+>>>>>>> c7bd2ff1524a458af62ac935d2981e1bd12a3598
 
 >>>>>>> 4471a5618f8c220ceecba9f865ba46594aed05ad
 TRAJECT_OPSTELLEN = "random"    # "min", "max", "random"
