@@ -65,7 +65,7 @@ De code is geschreven in Python 3.6.
 Alle in Python geschreven code staat in het mapje code. 
 
 ### Test
-Om de code te runnen gebruik de volgende instructie:
+Om de code te runnen lees de volgende instructies:
 
 > In RailNL_main.py voer de opdracht die je wilt uitvoeren in. Ook is er de mogelijkheid om te kiezen welke manier er wordt gebruikt bij zowel het opstellen als het uitbreiden van een traject, hierbij kunt u kiezen uit min, max en random. Run vervolgens het bestand zonder argumenten.
 
