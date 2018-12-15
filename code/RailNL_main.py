@@ -10,19 +10,12 @@ from functies.def_hill_climbing import hill_climbing
 from functies.def_simulated_annealing import simulated_annealing
 from copy import deepcopy
 
-#exportfile = open('export.csv', 'a')
+while True:
+    OPDRACHT = input("Welke opdracht wilt u uitvoeren? Kies uit 1a, 1b, 1c, 1d, 1e ")
+    if OPDRACHT in ["1a", "1b", "1c", "1d", "1e"]:
+        print("Even geduld aub..")
+        break
 
-
-<<<<<<< HEAD
-OPDRACHT = "1a"                 # "1a", "1b", "1c", "1d", "1e"
-=======
-<<<<<<< HEAD
-OPDRACHT = "1a"                 # "1a", "1b", "1c", "1d", "1e"
-=======
-OPDRACHT = "1d"                 # "1a", "1b", "1c", "1d", "1e"
->>>>>>> c7bd2ff1524a458af62ac935d2981e1bd12a3598
-
->>>>>>> 4471a5618f8c220ceecba9f865ba46594aed05ad
 TRAJECT_OPSTELLEN = "random"    # "min", "max", "random"
 TRAJECT_UITBREIDEN = "random"   # "min", "max", "random"
 
@@ -32,25 +25,18 @@ else:
     aantalLoops = 1
 
 if OPDRACHT == "1a":
-    MIN_TREINEN = 3
-    MAX_TREINEN = 3
-    MIN_MINUTEN = 120
-    MAX_MINUTEN = 120
+    variabelen = [4, 4, 120, 120]
 elif OPDRACHT == "1b" or OPDRACHT == "1c":
-    MIN_TREINEN = 4
-    MAX_TREINEN = 4
-    MIN_MINUTEN = 120
-    MAX_MINUTEN = 120
+    variabelen = [4, 4, 120, 120]
 elif OPDRACHT == "1d":
-    MIN_TREINEN = 9
-    MAX_TREINEN = 9
-    MIN_MINUTEN = 180
-    MAX_MINUTEN = 180
+    variabelen = [9, 9, 180, 180]
 elif OPDRACHT == "1e":
-    MIN_TREINEN = 12
-    MAX_TREINEN = 12   
-    MIN_MINUTEN = 180
-    MAX_MINUTEN = 180
+    variabelen = [12, 12, 180, 180]
+    
+MIN_TREINEN = variabelen[0]
+MAX_TREINEN = variabelen[1]   
+MIN_MINUTEN = variabelen[2]
+MAX_MINUTEN = variabelen[3]
 
 bestanden = importeren(OPDRACHT)
 all_connections = bestanden[0]
@@ -81,7 +67,7 @@ for station in all_stations:
 maximum_doelwaarde = 0
 
 for treinen in range(MIN_TREINEN, MAX_TREINEN + 1):
-    print(treinen)
+
     for minuutjes in range(MIN_MINUTEN, MAX_MINUTEN + 1):
         
         " RESTRICTIES LIJNVOERING "
@@ -89,9 +75,6 @@ for treinen in range(MIN_TREINEN, MAX_TREINEN + 1):
         MAX_AANTAL_MINUTEN = minuutjes
         
         for AantalKeerLoopen in range(aantalLoops):
-#            exportfile.write("-----------------------------------  NIEUW  -----------------------------\n")
-#            exportfile.write(str(MAX_AANTAL_TREINEN) + "   " + str(MAX_AANTAL_MINUTEN) + "\n")
-#            exportfile.write("\n")
             
             for conn in list_with_connections:
                 conn.used = False
@@ -103,7 +86,6 @@ for treinen in range(MIN_TREINEN, MAX_TREINEN + 1):
                 new = new_traject(list_with_connections, TRAJECT_OPSTELLEN)
                 if new != False:
                     list_with_trajects.append(new)
-#                    exportfile.write(str(new.stations) + "     " + str(new.total_time) + "\n")
                 else:
                     break
             
@@ -113,15 +95,6 @@ for treinen in range(MIN_TREINEN, MAX_TREINEN + 1):
                 while True: 
                     if not traject.new_connection(list_with_connections, MAX_AANTAL_MINUTEN, TRAJECT_UITBREIDEN):
                         break
-            
-            " per traject telkens maar 1 connectie toevoegen "
-#            grens = [True] * len(list_with_trajects)
-#            
-#            while True in grens:
-#                for i in range(0, len(list_with_trajects)):
-#                    if grens[i] == True:
-#                        if not list_with_trajects[i].new_connection(list_with_connections, MAX_AANTAL_MINUTEN, TRAJECT_UITBREIDEN):
-#                            grens[i] = False
                  
                     
             " TRY TO ADD UNUSED CRITIC CONNECTIONS TO EXISTING TRAJECTS "
@@ -132,7 +105,6 @@ for treinen in range(MIN_TREINEN, MAX_TREINEN + 1):
             
             
             
-#            exportfile.write("\n")
             " PRINT UNUSED CONNECTIONS " 
             aantal = 0
             x_unused = []
@@ -146,23 +118,9 @@ for treinen in range(MIN_TREINEN, MAX_TREINEN + 1):
                         if s.name in [i.station1, i.station2]:
                             x.append(float(s.x))
                             y.append(float(s.y))
-#                        elif s.name == i.station2:
-#                            x.append(float(s.x))
-#                            y.append(float(s.y))
                     x_unused.append(x)
                     y_unused.append(y)
-#                    exportfile.write(i.station1 + "  -  " + i.station2 + "\n")
                    
-            
-#            exportfile.write("\n")
-#            for traject in list_with_trajects:
-#                exportfile.write(str(traject.stations) + "    " + str(traject.total_time) + "\n")
-                
-#            exportfile.write("\n")
-#            exportfile.write("Doelwaarde: \n")
-#            exportfile.write(str(doelfunctie(list_with_connections, list_with_trajects)) + "\n")
-#            exportfile.write(str(aantal) + "\n")
-#            exportfile.write("\n")
             
             doel = doelfunctie(list_with_connections, list_with_trajects)
             if doel >= maximum_doelwaarde:
@@ -198,68 +156,30 @@ for traject in list_with_trajects:
     yen.append(y)
 
 
-print(OPDRACHT)    
-print(treinen_save)
-print(minuten_save)
-print(maximum_doelwaarde)     
-print(aantal_save)
+print("Opdracht: " + OPDRACHT)    
+print("Aantal trajecten: " + str(treinen_save))
+print("Max aantal minuten per traject: " + str(minuten_save))
+print("Kwaliteit: " + str(maximum_doelwaarde))    
+print("Aantal ongebruikte kritieke sporen: " + str(aantal_save))
 
 plotten(OPDRACHT, xen, yen, x_unused_save, y_unused_save)
 
 
 
-#for i in range(1):
-#=======
-#
-##for i in range(100):
-#
-#    #resultaat = hill_climbing(list_with_trajects, list_with_stations, list_with_connections)
-#    #resultaat = simulated_annealing(list_with_trajects, list_with_stations, list_with_connections, i)
-#    #if resultaat != False:
-#        #list_with_trajects = deepcopy(resultaat)
-#        
-#>>>>>>> 3a36def03616b9aae5d71590cd73f2e24a97d166
-#
-#for i in range(100):
-<<<<<<< HEAD
-
-    #resultaat = hill_climbing(list_with_trajects, list_with_stations, list_with_connections)
-    #resultaat = simulated_annealing(list_with_trajects, list_with_stations, list_with_connections, i)
-    #if resultaat != False:
-        #list_with_trajects = deepcopy(resultaat)
         
 
 for i in range(1000):
-    #resultaat = hill_climbing(list_with_trajects, list_with_stations, list_with_connections)
-    resultaat = simulated_annealing(list_with_trajects, list_with_stations, list_with_connections, i)
+    resultaat = hill_climbing(list_with_trajects, list_with_stations, list_with_connections)
     if resultaat != False:
-        print(resultaat)
         list_with_trajects = deepcopy(resultaat[0])
         list_with_connections = deepcopy(resultaat[1])
-        print(doelfunctie(list_with_connections, list_with_trajects))
+
+for i in range(1000):
+    resultaat = simulated_annealing(list_with_trajects, list_with_stations, list_with_connections, i)
+    if resultaat != False:
+        list_with_trajects = deepcopy(resultaat[0])
+        list_with_connections = deepcopy(resultaat[1])
         
 
-#exportfile.close() 
-#print(doelfunctie(list_with_connections, list_with_trajects))
-=======
-#    #resultaat = hill_climbing(list_with_trajects, list_with_stations, list_with_connections)
-#    resultaat = simulated_annealing(list_with_trajects, list_with_stations, list_with_connections, i)
-#    if resultaat != False:
-#        list_with_trajects = deepcopy(resultaat[0])
-#        list_with_connections = deepcopy(resultaat[1])
-#        
-#
-#<<<<<<< HEAD
-##for i in range(100):
-###    resultaat = hill_climbing(list_with_trajects, list_with_stations, list_with_connections)
-###    resultaat = simulated_annealing(list_with_trajects, list_with_stations, list_with_connections)
-##    if resultaat != False:
-##        list_with_trajects = deepcopy(resultaat[0])
-##        list_with_connections = deepcopy(resultaat[1])
-##        
-#
-#=======
-#>>>>>>> 3a36def03616b9aae5d71590cd73f2e24a97d166
-##exportfile.close() 
-print(doelfunctie(list_with_connections, list_with_trajects))
->>>>>>> 4471a5618f8c220ceecba9f865ba46594aed05ad
+print("Kwaliteit na optimaliseren: " + str(doelfunctie(list_with_connections, list_with_trajects)))
+

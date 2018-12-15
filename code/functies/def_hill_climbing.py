@@ -3,19 +3,13 @@ from copy import deepcopy
 from functies.def_doelfunctie import doelfunctie
 
 def hill_climbing(list_with_trajects, list_with_stations, list_with_connections):
-    #random 1 traject uit list_with_trajects kiezen    v 
-    #random 2 plaatsen uit traject kiezen              v
-    #check if connectie bestaat als omgedraaid         v
-    #maak copy list_with_trajects                      v
-    #draai plaatsen om                                 v
-    #hogere doelwaarde? kopie als origineel nemen, anders door met origineel
+
     traject = random.choice(list_with_trajects)
-#    print(traject.stations)
+
     if len(traject.stations) > 2:  
         station1 = random.choice(traject.stations)
         station2 = random.choice(traject.stations)
-#        print(station1)
-#        print(station2)
+
         index1 = traject.stations.index(station1)
         index2 = traject.stations.index(station2)
         
@@ -130,8 +124,6 @@ def hill_climbing(list_with_trajects, list_with_stations, list_with_connections)
                                 check += 1
           
             if nodig == check: 
-                print("ruilbaar")
-                
                 copy_traject = deepcopy(traject) 
                 copy_traject.stations[index1], copy_traject.stations[index2] = copy_traject.stations[index2], copy_traject.stations[index1]
                 copy_list_with_trajects = deepcopy(list_with_trajects)
@@ -148,7 +140,6 @@ def hill_climbing(list_with_trajects, list_with_stations, list_with_connections)
                         c.used = True
                         
                 if doelfunctie(list_with_connections, list_with_trajects) < doelfunctie(copy_connections, copy_list_with_trajects):
-                    print("joe")
                     return [copy_list_with_trajects, copy_connections]
                 
     return False
