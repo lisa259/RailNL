@@ -17,8 +17,8 @@ from copy import deepcopy
 
 # Vraag de gebruiker welke opdracht uitgevoerd moet worden
 while True:
-    OPDRACHT = input("Welke opdracht wilt u uitvoeren? Kies uit 1a, 1b, 1c, 1d, 1e : ")
-    if OPDRACHT in ["1a", "1b", "1c", "1d", "1e"]:
+    OPDRACHT = input("Welke opdracht wilt u uitvoeren? Kies uit 1a, 1b, 1c, 1d, 1e, 1h : ")
+    if OPDRACHT in ["1a", "1b", "1c", "1d", "1e", "1h"]:
         print("Even geduld aub..")
         print("")
         break
@@ -40,6 +40,8 @@ elif OPDRACHT == "1d":
     variabelen = [9, 9, 180, 180]
 elif OPDRACHT == "1e":
     variabelen = [12, 12, 180, 180]
+elif OPDRACHT == "1h":
+    variabelen = [8, 8, 180, 180]
     
 MIN_TREINEN = variabelen[0]
 MAX_TREINEN = variabelen[1]   
@@ -57,13 +59,21 @@ all_stations = bestanden[1]
 " GEGEVENS CVS VERWERKEN "
 # Stop alle connecties als een CONNECTION-object in een lijst
 list_with_connections = []
+utrechtjes = []
 for connection in all_connections:
+    
+    if OPDRACHT == "1h" and "Utrecht Centraal" in [connection[0], connection[1]]:
+        utrechtjes.append([connection[0], connection[1]][[connection[0], connection[1]].index("Utrecht Centraal") -1])
+        continue
+    
     list_with_connections.append(CONNECTION(connection[0], connection[1], float(connection[2])))
-   
+
     
 # Stop alle stations als een STATIONS-object in een lijst
 list_with_stations = []
 for station in all_stations:
+    if OPDRACHT == "1h" and station[0] == "Utrecht Centraal":
+        continue
     boolean = False
     # bij 1c en 1e zijn alle stations/sporen kritiek
     if station[-1] == "Kritiek" or OPDRACHT in ["1c", "1e"]:
@@ -79,7 +89,10 @@ for station in all_stations:
                 
     list_with_stations.append(STATION(station[0], boolean, connections, station[2], station[1]))
 
-
+if OPDRACHT == "1h":
+    for conn in list_with_connections:
+        if conn.station1 in utrechtjes and conn.station2 in utrechtjes:
+            conn.setCritic(True)
 
 
 " OPSTELLEN LIJNVOERING "
