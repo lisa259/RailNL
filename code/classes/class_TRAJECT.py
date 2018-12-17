@@ -13,17 +13,20 @@ class TRAJECT:
     def addTotal_time(self, time):
         self.total_time += time
         
-    "KORTSTE ONGEBRUIKTE KRITIEKE PAD ZOEKEN + TOEVOEGEN AAN TRAJECT"
+    " TRAJECT UITBREIDEN "
     def new_connection(self, list_with_connections, MAX_AANTAL_MINUTEN, TRAJECT_UITBREIDEN):
         shortest = None
+        
+        # Random/kritiek/ongebruikte connectie dat aansluit op traject toevoegen
         if TRAJECT_UITBREIDEN == "random":
             lijstje = []
-            # zoekt kortste, ongebruikte, kritiek spoore, dat aansluit op station1 of station2
+            # zoek ongebruikte, kritiek sporen, die aansluiten op station1 of station2
             for conn in list_with_connections:
                 if conn.critic == True and conn.used == False and (conn.station1 == self.stations[0] or conn.station1 == self.stations[-1] or conn.station2 == self.stations[0] or conn.station2 == self.stations[-1]):
                     lijstje.append(conn)
-            # spoor gevonden en valt nog binnen de tijd: toevoegen aan traject
+            
             while lijstje:
+                # Kies random 1 van de geschikte sporen
                 gebruiken = random.choice(lijstje)
                 if self.total_time + gebruiken.duration <= MAX_AANTAL_MINUTEN:
                     if self.stations[0] == gebruiken.station1:
@@ -43,6 +46,7 @@ class TRAJECT:
             # geen spoor gevonden om toe te kunnen voegen
             return False
         
+        # kortste/kritiek/ongebruikte connectie dat aansluit op traject toevoegen
         elif TRAJECT_UITBREIDEN == "min":
             minimum = math.inf
             # zoekt kortste, ongebruikte, kritiek spoore, dat aansluit op station1 of station2
@@ -50,10 +54,11 @@ class TRAJECT:
                 if conn.critic == True and conn.used == False and conn.duration < minimum and (conn.station1 == self.stations[0] or conn.station1 == self.stations[-1] or conn.station2 == self.stations[0] or conn.station2 == self.stations[-1]):
                     minimum = conn.duration
                     shortest = conn
-                
+        
+        # langste/kritiek/ongebruikte connectie dat aansluit op traject toevoegen        
         elif TRAJECT_UITBREIDEN == "max":
             minimum = 0
-            # zoekt kortste, ongebruikte, kritiek spoore, dat aansluit op station1 of station2
+            # zoekt langste, ongebruikte, kritiek spoore, dat aansluit op station1 of station2
             for conn in list_with_connections:
                 if conn.critic == True and conn.used == False and conn.duration > minimum and (conn.station1 == self.stations[0] or conn.station1 == self.stations[-1] or conn.station2 == self.stations[0] or conn.station2 == self.stations[-1]):
                     minimum = conn.duration

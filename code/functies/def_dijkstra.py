@@ -45,6 +45,7 @@ def Dijkstra(current, list_with_stations):
         current, currentDistance = sorted(candidates, key = lambda x: x[1])[0]
     return [visited, parents]
 
+
 " PATH VAN DIJKSTRA OPSTELLEN: VAN GEVRAAGD NAAR BEGIN STATION "
 def deconstruct_path(parents, end):
     if end not in parents:

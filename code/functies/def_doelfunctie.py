@@ -1,7 +1,7 @@
 
 " BEPALEN KWALITEIT VAN LIJNVOERING "       
 def doelfunctie(list_with_connections, list_with_trajects):
-    # bepalen p
+    # bepalen p (fractie gebruikte kritieke sporen)
     aantalkritiek = 0
     aantalgebruikt = 0
     for connection in list_with_connections:
@@ -17,6 +17,5 @@ def doelfunctie(list_with_connections, list_with_trajects):
     Min = 0
     for traject in list_with_trajects:
         Min += traject.total_time
-#    print("{}, {}, {}".format(p, T, Min))
     
     return (p * 10000 - T * 20 - Min / 10)

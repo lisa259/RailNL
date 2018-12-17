@@ -5,7 +5,7 @@ from functies.def_doelfunctie import doelfunctie
 
 " ONGEBRUIKTE KRITIEKE SPOREN TOEVOEGEN AAN BESTAANDE TRAJECTEN "
 def linken(stations, time, list_with_trajects, list_with_stations, MAX_AANTAL_MINUTEN, doelwaarde, list_with_connections, connectie_index):
-    #stations bevat de 2 stations van de ongebruikte connectie
+    # parameter stations is een list met de 2 stations van de ongebruikte connectie
     minimum = math.inf
     
     for add_station in stations:
@@ -14,6 +14,7 @@ def linken(stations, time, list_with_trajects, list_with_stations, MAX_AANTAL_MI
         verbindingen = dijkstra[0]
         parents = dijkstra[1]
        
+        # Opslaan van de korste route om het station te linken 
         for station, afstand in verbindingen.items():
             for traject in list_with_trajects:
                 # check of station aansluit op het traject, en of de afstand minimaal is, en of het de totale aantal min van het traject niet overstrijd
@@ -27,6 +28,7 @@ def linken(stations, time, list_with_trajects, list_with_stations, MAX_AANTAL_MI
                     else:
                         toevoegen = stations[0]
      
+        
     # aansluitend traject gevonden: connectie toevoegen aan best aansluitende traject            
     if minimum != math.inf:
         # haal het korste pad op van beginstation naar aansluitend station (uit traject)
@@ -36,22 +38,21 @@ def linken(stations, time, list_with_trajects, list_with_stations, MAX_AANTAL_MI
         elif end == in_traject.stations[-1]:
             plek = "end"
         if path != None:  
-            # eerst checken of het betere doelwaarde geeft
-            # doelwaarde bij toevoegen berekenen
+            # kopieën
             index_traject = list_with_trajects.index(in_traject)
             copy_trajecten = deepcopy(list_with_trajects)
             copy_connections = deepcopy(list_with_connections)
             copy_trajecten[index_traject].addTotal_time(minimum + time)
+            
+            # path toevoegen aan traject
             for index in range(1, len(path)):
                 copy_trajecten[index_traject].addStation(path[index], plek)
-            # MISSCHIEN IS TOEVOEGEN traject.stations[-2] niet nodig
             if copy_trajecten[index_traject].stations[-2] != toevoegen:
                 copy_trajecten[index_traject].addStation(toevoegen, plek)
             copy_connections[connectie_index].setUsed(True)
             
+            # Betere doelwaarde?
             if doelwaarde <= doelfunctie(copy_connections, copy_trajecten):
-            
-            
             
                 in_traject.addTotal_time(minimum + time)
                 # path toevoegen aan traject

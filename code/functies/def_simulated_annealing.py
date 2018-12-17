@@ -1,28 +1,29 @@
 import random
 from math import log
 from copy import deepcopy
-from functies.def_doelfunctie import doelfunctie
 
 def simulated_annealing(list_with_trajects, list_with_stations, list_with_connections, iteratie):
 
+    # random traject
     traject = random.choice(list_with_trajects)
 
     if len(traject.stations) > 2:  
+        # 2 random stations uit traject
         station1 = random.choice(traject.stations)
         station2 = random.choice(traject.stations)
 
         index1 = traject.stations.index(station1)
         index2 = traject.stations.index(station2)
         
-        check = 0
-        nodig = 0
+        check = 0 # aantal kloppende connecties (bij wisselen)
+        nodig = 0 # aantal connecties dat nodig is om te wisselen
         
         conn_nieuw = []
         conn_oud = []
         
         # onzin om met jezelf te ruilen
         if station1 != station2:
-            # station2 niet aan buitenkanten traject, om te weten dat er 2 buren zijn
+            # station2 niet aan buitenkanten traject, station2 heeft 2 buren
             if len(traject.stations)-1 > index2 > 0:
                 nodig += 2
                 
@@ -42,7 +43,7 @@ def simulated_annealing(list_with_trajects, list_with_stations, list_with_connec
                                 check += 1
                                 
                                 
-            # station1 niet aan buitenkanten traject, om te weten dat er 2 buren zijn
+            # station1 niet aan buitenkanten traject, station1 heeft 2 buren
             if len(traject.stations)-1 > index1 > 0:
                 nodig += 2
                 
@@ -124,14 +125,17 @@ def simulated_annealing(list_with_trajects, list_with_stations, list_with_connec
                             if traject.stations[-2] in [connection.station1, connection.station2] and traject.stations[-2] != station.name:
                                 check += 1
           
+            # kan gewisseld worden
             if nodig == check: 
                 
+                # draai stations om in gekopieëerde lijst
                 copy_traject = deepcopy(traject) 
                 copy_traject.stations[index1], copy_traject.stations[index2] = copy_traject.stations[index2], copy_traject.stations[index1]
                 copy_list_with_trajects = deepcopy(list_with_trajects)
                 index_traject = list_with_trajects.index(traject)
                 copy_list_with_trajects[index_traject] = deepcopy(copy_traject)
                 
+                # Pas connecties used aan
                 copy_connections = deepcopy(list_with_connections)
                 for c in copy_connections:
                     # if oude connectie: 
@@ -140,7 +144,8 @@ def simulated_annealing(list_with_trajects, list_with_stations, list_with_connec
                     # if nieuwe connectie:
                     if sorted([c.station1, c.station2]) in conn_nieuw:
                         c.used = True
-                        
+                   
+                # Bereken cooling scheme + random acceptatiekans
                 Tbegin = 1
                 Teind = 0.1
                 N = 100
@@ -151,7 +156,7 @@ def simulated_annealing(list_with_trajects, list_with_stations, list_with_connec
                 c = 4
                 Ti = c /(log(i + d))
                 
-                #doelfunctie(list_with_connections, list_with_trajects) < doelfunctie(copy_connections, copy_list_with_trajects)
+                # accepteren?
                 if acceptatie <= Ti:
                     return [copy_list_with_trajects, copy_connections]
                 

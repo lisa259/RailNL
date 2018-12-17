@@ -4,24 +4,26 @@ from functies.def_doelfunctie import doelfunctie
 
 def hill_climbing(list_with_trajects, list_with_stations, list_with_connections):
 
+    # Random traject
     traject = random.choice(list_with_trajects)
 
-    if len(traject.stations) > 2:  
+    if len(traject.stations) > 2: 
+        # 2 random stations uit geselecteerde traject
         station1 = random.choice(traject.stations)
         station2 = random.choice(traject.stations)
 
         index1 = traject.stations.index(station1)
         index2 = traject.stations.index(station2)
         
-        check = 0
-        nodig = 0
+        check = 0 # Aantal kloppende connecties (Bij verwisselen)
+        nodig = 0 # Aantal connecties dat gemaakt moet kunnen worden
         
         conn_nieuw = []
         conn_oud = []
         
         # onzin om met jezelf te ruilen
         if station1 != station2:
-            # station2 niet aan buitenkanten traject, om te weten dat er 2 buren zijn
+            # station2 niet aan buitenkanten traject, station2 heeft 2 buren
             if len(traject.stations)-1 > index2 > 0:
                 nodig += 2
                 
@@ -41,7 +43,7 @@ def hill_climbing(list_with_trajects, list_with_stations, list_with_connections)
                                 check += 1
                                 
                                 
-            # station1 niet aan buitenkanten traject, om te weten dat er 2 buren zijn
+            # station1 niet aan buitenkanten traject, station1 heeft 2 buren
             if len(traject.stations)-1 > index1 > 0:
                 nodig += 2
                 
@@ -123,7 +125,9 @@ def hill_climbing(list_with_trajects, list_with_stations, list_with_connections)
                             if traject.stations[-2] in [connection.station1, connection.station2] and traject.stations[-2] != station.name:
                                 check += 1
           
+            # Stations kunnen van plek gewisseld worden
             if nodig == check: 
+                # Levert het een betere kwaliteit op?
                 copy_traject = deepcopy(traject) 
                 copy_traject.stations[index1], copy_traject.stations[index2] = copy_traject.stations[index2], copy_traject.stations[index1]
                 copy_list_with_trajects = deepcopy(list_with_trajects)
