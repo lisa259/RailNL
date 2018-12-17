@@ -6,7 +6,7 @@ def importeren(OPDRACHT):
     if OPDRACHT in ["1a", "1b", "1c"]:
         naam_connecties = os.path.join(os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir)), 'csv', 'ConnectiesHolland.csv')
         name_stations = os.path.join(os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir)), 'csv', 'StationsHolland.csv')
-    elif OPDRACHT in ["1d", "1e", "1h"]: 
+    elif OPDRACHT in ["1d", "1e", "1h", "1i"]: 
         naam_connecties = os.path.join(os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir)), 'csv', 'ConnectiesNationaal.csv')
         name_stations = os.path.join(os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir)), 'csv', 'StationsNationaal.csv')
         

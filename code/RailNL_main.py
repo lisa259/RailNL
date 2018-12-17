@@ -15,10 +15,17 @@ from copy import deepcopy
 
 " BEPALEN VARIABELEN "
 
+
+station_vervallen = "Utrecht Centraal"
 # Vraag de gebruiker welke opdracht uitgevoerd moet worden
 while True:
-    OPDRACHT = input("Welke opdracht wilt u uitvoeren? Kies uit 1a, 1b, 1c, 1d, 1e, 1h : ")
-    if OPDRACHT in ["1a", "1b", "1c", "1d", "1e", "1h"]:
+    OPDRACHT = input("Welke opdracht wilt u uitvoeren? Kies uit 1a, 1b, 1c, 1d, 1e, 1h , 1i: ")
+    if OPDRACHT in ["1a", "1b", "1c", "1d", "1e", "1h", "1i"]:
+        if OPDRACHT == "1i":
+            while True:
+                station_vervallen = input("Voer het station in dat komt te vervallen. (Let op hoofdletters etc.): ")
+                if station_vervallen in ["Alkmaar", "Almelo", "Almere Centrum", "Alphen a/d Rijn", "Amersfoort", "Amsterdam Amstel", "Amsterdam Centraal", "Amsterdam Sloterdijk", "Amsterdam Zuid", "Apeldoorn", "Arnhem Centraal", "Assen", "Beverwijk", "Breda", "Castricum", "Delft", "Den Haag Centraal", "Den Haag HS", "Den Haag Laan v NOI", "Den Helder", "Deventer", "Dieren", "Dordrecht", "Ede-Wageningen", "Eindhoven", "Enschede", "Etten-Leur", "Gouda", "Groningen", "Haarlem", "Heemstede-Aerdenhout", "Heerenveen", "Heerlen", "Helmond", "Hengelo", "Hilversum", "Hoorn", "Leeuwarden", "Leiden Centraal", "Lelystad Centrum", "Maastricht", "Nijmegen", "Oss", "Roermond", "Roosendaal", "Rotterdam Alexander", "Rotterdam Blaak", "Rotterdam Centraal", "Schiedam Centrum", "Schiphol Airport", "Sittard", "Steenwijk", "Tilburg", "Utrecht Centraal", "Venlo", "Vlissingen", "Weert", "Zaandam", "Zutphen", "Zwolle", "s-Hertogenbosch"]:
+                    break
         print("Even geduld aub..")
         print("")
         break
@@ -40,7 +47,7 @@ elif OPDRACHT == "1d":
     variabelen = [9, 9, 180, 180]
 elif OPDRACHT == "1e":
     variabelen = [12, 12, 180, 180]
-elif OPDRACHT == "1h":
+elif OPDRACHT in ["1h", "1i"]:
     variabelen = [8, 8, 180, 180]
     
 MIN_TREINEN = variabelen[0]
@@ -62,8 +69,8 @@ list_with_connections = []
 utrechtjes = []
 for connection in all_connections:
     
-    if OPDRACHT == "1h" and "Utrecht Centraal" in [connection[0], connection[1]]:
-        utrechtjes.append([connection[0], connection[1]][[connection[0], connection[1]].index("Utrecht Centraal") -1])
+    if OPDRACHT in ["1h", "1i"] and station_vervallen in [connection[0], connection[1]]:
+        utrechtjes.append([connection[0], connection[1]][[connection[0], connection[1]].index(station_vervallen) -1])
         continue
     
     list_with_connections.append(CONNECTION(connection[0], connection[1], float(connection[2])))
@@ -72,7 +79,7 @@ for connection in all_connections:
 # Stop alle stations als een STATIONS-object in een lijst
 list_with_stations = []
 for station in all_stations:
-    if OPDRACHT == "1h" and station[0] == "Utrecht Centraal":
+    if OPDRACHT in ["1h", "1i"] and station[0] == station_vervallen:
         continue
     boolean = False
     # bij 1c en 1e zijn alle stations/sporen kritiek
@@ -89,7 +96,7 @@ for station in all_stations:
                 
     list_with_stations.append(STATION(station[0], boolean, connections, station[2], station[1]))
 
-if OPDRACHT == "1h":
+if OPDRACHT in ["1h", "1i"]:
     for conn in list_with_connections:
         if conn.station1 in utrechtjes and conn.station2 in utrechtjes:
             conn.setCritic(True)

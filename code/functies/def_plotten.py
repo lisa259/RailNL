@@ -9,7 +9,7 @@ def plotten(OPDRACHT, x_punten, y_punten, x_unused, y_unused):
         y_max = 53
         x_min = 4.25
         x_max = 5.1     
-    elif OPDRACHT in ["1d", "1e", "1h"]:
+    elif OPDRACHT in ["1d", "1e", "1h", "1i"]:
         y_min = 50.6
         y_max = 53.45
         x_min = 3.25
